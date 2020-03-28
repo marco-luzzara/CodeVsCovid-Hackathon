@@ -1,0 +1,243 @@
+openapi: 3.0.0
+info:
+  title: Covid api
+  description: Optional multiline or single-line description in [CommonMark](http://commonmark.org/help/) or HTML.
+  version: 1.0.0
+servers:
+  - url: node server
+
+paths:
+  /users:
+    post:
+      summary: Register a new user.
+      description: Register a new user or a new nurse
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegistrationBody'
+      responses:
+        '201':
+          description: User is created, returns its id
+          content:
+            text/plain:
+              schema:
+                type: integer
+        '409':
+          description: Another user is registered with the same mail.
+          
+  /users/login:
+    post:
+      summary: Login of an existing user (or nurse)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLoginBody'
+              
+      responses:
+        '200':
+          description: returns the correspondent user id
+          content:
+            text/plain:
+              schema:
+                type: integer
+        '401':
+          description: Invalid user credentials
+          
+  /users/dossiers:
+    post:
+      summary: Associate a dossier to a certain user, who can be a relative of the hospitalized patient.  
+      description: Once a patient is taken from home to the hospital, the relative (user) receive id and pwd of the dossier just dedicated to the patient. With these credentials he can monitor patient situation. Does not need nurse credentials.
+      parameters: 
+        - $ref: '#/components/parameters/UserIdHeader'
+      requestBody:
+        description: credentials of a certain dossier
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DossierAssociationBody'
+              
+      responses:
+        '200':
+          description: this dossier has been added to the relative's dossiers
+        '404':
+          description: dossier id does not exist
+        '409':
+          description: dossier has not been assigned to a patient yet.
+        '401':
+          description: specified password is not correct
+          
+  /dossiers/{dossierId}:
+    get:
+      summary: get all messages (updates) of a dossier
+      description: when queried, it returns an array of messages related to specified dossier, ordered by date, where the first one is the last that has been sent by the nurse. Does not need nurse credentials.
+      parameters: 
+        - $ref: '#/components/parameters/UserIdHeader'
+        - $ref: '#/components/parameters/DossierIdParameter'
+              
+      responses:
+        '200':
+          description: array of messages, ordered by date, where the first one is the last that has been sent by the nurse.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDossierInfoResponse'
+        '403':
+          description: this dossier has not been activated yet
+        '404':
+          description: dossier id specified does not exist
+        '401':
+          description: user with specified User-Id cannot access to this dossier
+          
+    put:
+      summary: Activate a dossier
+      description: it is done when a dossier is assigned to a newly arrived patient. The relatives already have dossier credentials and are waiting for its activation. Called by the nurse only.
+      parameters: 
+        - $ref: '#/components/parameters/UserIdHeader'
+        - $ref: '#/components/parameters/DossierIdParameter'
+      
+      responses:
+        '200':
+          description: Dossier activated
+        '404':
+          description: Dossier specified does not exist
+        '409':
+          description: dossier has already been activated, cannot do it twice
+        '401':
+          description: Unauthorized, user that calls this api is not a nurse
+      
+          
+  /dossiers:
+    get:
+      summary: get base info for all user's associated dossiers
+      description: get base info to let user choose which dossier he wants to open. Does not need nurse credentials.
+      parameters: 
+        - $ref: '#/components/parameters/UserIdHeader'
+              
+      responses:
+        '200':
+          description: array of messages, ordered by date, where the first one is the last that has been sent by the nurse.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDossiersBaseInfoResponse'
+        '401':
+          description: missing User-Id field
+          
+    post:
+      summary: Generate a new dossier
+      description: the hospital previously generates a new dossier, not activated yet (not assigned to a patient). Called by the nurse only.
+      parameters: 
+        - $ref: '#/components/parameters/UserIdHeader'
+        
+      responses:
+        '201':
+          description: Dossier created
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/DossierCreationResponse'
+        '401':
+          description: Unauthorized, user that calls this api is not a nurse
+          
+  /dossiers/{dossierId}/messages:
+    post:
+      summary: send a new message on the specified dossier chat
+      description: nurse can update the dossier sending messages that all the relatives associated to this dossier can read. Called by the nurse only.
+      parameters: 
+        - $ref: '#/components/parameters/UserIdHeader'
+        - $ref: '#/components/parameters/DossierIdParameter'
+      
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+              
+      responses:
+        '201':
+          description: message has been sent.
+        '409':
+          description: this dossier has not been activated yet
+        '404':
+          description: dossier id specified does not exist
+        '401':
+          description: user with specified User-Id cannot access to this dossier (only nurse can).
+                  
+components:
+  schemas:
+    DossierCreationResponse:
+      type: object
+      properties:
+        dossierId:
+          type: integer
+        dossierPwd:
+          type: string
+          
+    DossierAssociationBody:
+      type: object
+      properties:
+        dossierId:
+          type: integer
+        dossierPwd:
+          type: string
+        patientLabel:
+          type: string
+    
+    GetDossierInfoResponse:
+      type: object
+      properties:
+        messages:
+          type: array
+          items:
+            type: string
+            
+    GetDossiersBaseInfoResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          dossierId:
+            type: integer
+          patientName: 
+            type: string
+          patientLastName: 
+            type: string
+            
+    UserRegistrationBody:
+      type: object
+      properties:
+        mail:
+          type: string
+        pwd:
+          type: string
+        role:
+          type: boolean
+          
+    UserLoginBody:
+      type: object
+      properties:
+        mail:
+          type: string
+        pwd:
+          type: string
+              
+          
+  parameters:
+    UserIdHeader:
+      name: User-Id
+      in: header
+      description: the user id retrieve from login
+      required: true
+      schema:
+        type: integer
+        
+    DossierIdParameter:
+      in: path
+      name: dossierId
+      description: id of the dossier
+      required: true
+      schema:
+        type: integer
+      
