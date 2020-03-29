@@ -2,13 +2,18 @@ const express = require('express');
 const router = express.Router();
 const BodyValidator = require("../utils/BodyValidator.js").BodyValidator;
 const BodyValidatorError = require("../utils/BodyValidator.js").BodyValidatorError;
+const errorHandler = require('../utils/errorHandler.js');
+
+const UserMailAlreadyExistsError = require("../model/exceptions/logic/userMailAlreadyExistsError.js");
+const WrongUserPasswordError = require("../model/exceptions/logic/wrongUserPasswordError.js");
+const WrongDossierPasswordError = require("../model/exceptions/logic/wrongDossierPasswordError.js");
+const DossierIdNotFoundError = require("../model/exceptions/logic/dossierIdNotFoundError.js");
+const DossierAlreadyActivatedError = require("../model/exceptions/logic/dossierAlreadyActivatedError.js");
+
 //--------------
 const db = require('');
 //--------------
 
-
-const userLogic = require('./logic/userLogic.js');
-const errorHandler = require('../utils/errorHandler.js');
 
 //Register a new user
 router.post("/", async function(req, res, next){
@@ -29,7 +34,8 @@ router.post("/", async function(req, res, next){
             res.status(500).json({message: "Cannot create a new user"});
     } catch (exc) {
         errorHandler(res, exc, {
-            "400": [BodyValidatorError],                    //TODO: add 409 conflict exception
+            "400": [BodyValidatorError],
+            "409": [UserMailAlreadyExistsError],
             "500": [null]
         })
     }
@@ -54,6 +60,7 @@ router.post("/login", async function(req, res){
     } catch (exc){
         errorHandler(res, exc, {
             "400": [BodyValidatorError],
+            "401": [WrongUserPasswordError],
             "500": [null]
         })
     }
@@ -63,16 +70,14 @@ router.post("/login", async function(req, res){
 router.post("/dossiers", async function(req, res){
     let uid = req.headers.uid;
     let body = req.body;
-    body.uid = uid;
 
     let requiredFields = {
-        uid: "number",
         dossierId: "number",
         dossierPwd: "string",
         patientLabel: "string"
     };
 
-    if (uid == undefined){
+    if (uid == undefined || typeof uid !== 'number'){
         res.status(401).end();
         return;
     }
@@ -80,10 +85,15 @@ router.post("/dossiers", async function(req, res){
     try {
         BodyValidator.validate(body, requiredFields);
 
-        let result = await db.associateDossierToUser(uid, dossierId);
+        let result = await db.associateDossierToUser(body, uid);
+        let status = (result != undefined) ? 200 : 404;
+        res.status(status).end();
     } catch(exc){
         errorHandler(res, exc, {
             "400": [BodyValidatorError],
+            "401": [WrongDossierPasswordError],
+            "404": [DossierIdNotFoundError],
+            "409": [DossierAlreadyActivatedError],      //TO change maybe
             "500": [null]
         })
     }
