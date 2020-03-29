@@ -1,0 +1,14 @@
+[
+    {
+        "userId": 1,
+        "dossierId": 0,
+        "message": "the patient is dying",
+        "timestamp": "2020-03-29T07:29:15.545Z"
+    },
+    {
+        "userId": 1,
+        "dossierId": 1,
+        "message": "he is healthy as tobi",
+        "timestamp": "2020-03-30T07:29:15.545Z"
+    }
+]

@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const db = require("../logic/dbClientInstance.js");
-const BodyValidator = require("../utils/BodyValidator.js").BodyValidator;
-const BodyValidatorError = require("../utils/BodyValidator.js").BodyValidatorError;
-const errorHandler = require('../utils/errorHandler.js');
+const BodyValidator = require("./utils/BodyValidator.js").BodyValidator;
+const BodyValidatorError = require("./utils/BodyValidator.js").BodyValidatorError;
+const errorHandler = require('./utils/errorHandler.js.js');
 
 const UserMailAlreadyExistsError = require("../model/exceptions/logic/userMailAlreadyExistsError.js");
 const WrongUserPasswordError = require("../model/exceptions/logic/wrongUserPasswordError.js");
@@ -89,7 +89,7 @@ router.post("/dossiers", async function(req, res){
             "400": [BodyValidatorError],
             "401": [WrongDossierPasswordError],
             "404": [DossierIdNotFoundError],
-            "409": [DossierAlreadyActivatedError],      //TO change maybe
+            "409": [DossierAlreadyActivatedError],
             "500": [null]
         })
     }

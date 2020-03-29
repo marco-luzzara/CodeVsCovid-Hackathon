@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require("../logic/dbClientInstance.js");
-const errorHandler = require('../utils/errorHandler.js');
+const errorHandler = require('./utils/errorHandler.js');
 
 const DossierAlreadyActivatedError = require("../model/exceptions/logic/dossierAlreadyActivatedError.js");
 const DossierNotActivatedError = require("../model/exceptions/logic/dossierNotActivatedError.js");
@@ -63,7 +63,7 @@ router.put("/", async function(req, res){
 //Retrieve dossier info
 router.get("/:dossierId", async function(req, res){
     let uid = req.headers.uid;
-    let dossierId = req.query.dossierId;
+    let dossierId = req.params.dossierId;
 
     if (uid == undefined || typeof uid !== 'number'){
         res.status(401).end();
@@ -114,7 +114,7 @@ router.get("/", async function(req, res){
 //Send a message for a specific dossier
 router.post("/:dossierId/messages", async function(req, res){
     let uid = req.headers.uid;
-    let dossierId = req.query.dossierId;
+    let dossierId = req.params.dossierId;
     let message = req.body;
 
     if (uid == undefined || typeof uid !== 'number'){

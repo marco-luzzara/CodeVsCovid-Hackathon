@@ -13,12 +13,11 @@ app.use(bodyParser.json());
 app.use('/users', router_user);
 app.use('/dossiers', router_dossier);
 
-app.listen(PORT, () => {
+let server = app.listen(PORT, () => {
     console.log("CodeVsCovid app is listening at port " + PORT);
 })
 
 let server_starting = new Promise((resolve, reject) => {
-
     //If the server il already running
     if (app.address().port == undefined)
         resolve();
@@ -29,6 +28,16 @@ let server_starting = new Promise((resolve, reject) => {
     });
 });
 
+let stop_server = new Promise((resolve, reject) => {
+    //If the server il already running
+    if (app.address().port == undefined)
+        resolve();
+
+    server.close();
+});
+
 module.exports = {
-    server_starting: server_starting
+    server: server,
+    server_starting: server_starting,
+    stop_server: stop_server
 }
