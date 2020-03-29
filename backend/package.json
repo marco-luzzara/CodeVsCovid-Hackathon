@@ -4,8 +4,9 @@
   "description": "The outcome of 3 days of work to fight the spreading of COVID-19.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "jest"
+    "start": "cross-env NODE_ENV=development node index.js",
+    "test": "cross-env NODE_ENV=development jest",
+    "testLogic": "cross-env NODE_ENV=development jest -i \"test(?!/api)/.*\""
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,7 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "config": "^3.3.1",
+    "cross-env": "^7.0.2",
     "express": "^4.17.1",
     "node-fetch": "^2.6.0"
   },
