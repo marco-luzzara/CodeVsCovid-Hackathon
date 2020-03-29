@@ -6,12 +6,13 @@ const app = express();
 const PORT = config.port || 3333;
 const router_user = require("./api/user.js");
 const router_dossier = require("./api/dossier.js");
-
+let router_news = require('./api/news');
 
 app.use(bodyParser.json());
 
 app.use('/users', router_user);
 app.use('/dossiers', router_dossier);
+app.use('/news', router_news);
 
 let server = app.listen(PORT, () => {
     console.log("CodeVsCovid app is listening at port " + PORT);
