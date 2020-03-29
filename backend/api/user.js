@@ -27,11 +27,9 @@ router.post("/", async function(req, res, next){
     try {
         BodyValidator.validate(body, requiredFields);
 
-        let result = await db.addNewUser(body);
-        if (result != undefined)
-            res.status(201).send(result);
-        else    
-            res.status(500).json({message: "Cannot create a new user"});
+        let userObj = await db.addNewUser(body);
+        
+        res.status(201).json(userObj);
     } catch (exc) {
         errorHandler(res, exc, {
             "400": [BodyValidatorError],

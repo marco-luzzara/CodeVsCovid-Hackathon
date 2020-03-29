@@ -46,7 +46,9 @@ describe('addNewUser', () => {
         });
 
         await expect(dbClient.addNewUser(newUser)).resolves.toBe(CURRENT_ID + 1);
-        await expect(dbClient.getUserIdFromCredentials(newUser.mail, newUser.pwd)).resolves.toBe(CURRENT_ID + 1);
+        let userObj = await dbClient.getUserIdFromCredentials(newUser.mail, newUser.pwd);
+        expect(userObj.id).toBe(CURRENT_ID + 1);
+        expect(userObj.isNurse).toBe(true);
     });
 });
 
@@ -86,21 +88,25 @@ describe('getUserIdFromCredentials', () => {
     });
 
     test('credentials are correct, should return userId', async () => {
-        const USERID = 11;
+        const USER_ID = 11;
         const MAIL = "ciccio.pasticcio@tobi.it";
         const PWD = "neversavemeinclear";
 
         let dbClient = new MockDbClient({
             users: [
                 {
-                    "id": USERID,
+                    "id": USER_ID,
                     "mail": MAIL,
                     "pwd": PWD,
+                    "isNurse": false
                 }
             ]
         });
 
-        await expect(dbClient.getUserIdFromCredentials(MAIL, PWD)).resolves.toBe(USERID);
+        await expect(dbClient.getUserIdFromCredentials(MAIL, PWD)).resolves.toEqual({
+            "id": USER_ID,
+            "isNurse": false
+        });
     });
 });
 
