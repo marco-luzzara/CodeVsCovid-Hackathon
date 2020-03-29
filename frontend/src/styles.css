@@ -1,4 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+app-root {
+    display: block;
+    height: 100%;
+}
+
+
+/* Custom styles for material components */
+.mat-tab-links {
+    justify-content: center;
+}
+
+.mat-card-header-text {
+    margin-left: 10px !important
+}

@@ -1,0 +1,22 @@
+.counters-container {
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.counter-value {
+    text-align: center;
+    margin: 10px;
+}
+
+.counter-title {
+    text-align: center;
+}
+
+.article-container {
+    margin: 10px;
+}

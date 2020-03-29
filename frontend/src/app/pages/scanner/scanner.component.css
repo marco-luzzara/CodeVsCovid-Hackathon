@@ -1,0 +1,17 @@
+.scanner-container {
+
+}
+
+.scanner {
+    width: 80%;
+    margin-left: calc(100% - 90%);
+    margin-right: calc(100% - 90%);
+    border: 4px;
+    border-style: solid;
+    border-color: red;
+}
+
+.scanner-title {
+    margin: 10px auto;
+    width: fit-content;
+}
