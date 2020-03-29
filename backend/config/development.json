@@ -3,9 +3,9 @@
     "port": 3333,
     "builderInstancePath": "mock/mockDbClientBuilderInstance",
     "builderConfig": {
-        "usersFilePath": "./data/users.json",
-        "dossiersFilePath": "./data/dossiers.json",
-        "users_dossiersFilePath": "./data/users_dossiers.json",
-        "messagesFilePath": "./data/messages.json"
+        "usersFilePathOrJson": "./data/users.json",
+        "dossiersFilePathOrJson": "./data/dossiers.json",
+        "users_dossiersFilePathOrJson": "./data/users_dossiers.json",
+        "messagesFilePathOrJson": "./data/messages.json"
     }
 }
