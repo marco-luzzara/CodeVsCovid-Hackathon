@@ -8,7 +8,6 @@ class DbClient
      * 
      * @param {Object} user : an object in this format
      * {
-     *     "id": int,
      *     "mail": String,
      *     "pwd": String,
      *     "isNurse": bool
@@ -31,7 +30,12 @@ class DbClient
 
     /**
      * 
-     * @param {Object} dossier 
+     * @param {Object} dossier : an object in this format
+     * {
+     *  id: int,
+     *  pwd: String,
+     *  patientLabel: String
+     * }
      * @param {int} userId 
      * @returns {void}
      */
@@ -39,23 +43,63 @@ class DbClient
         validateSubclassing();
     }
 
+    /**
+     * 
+     * @param {int} dossierId 
+     * @param {int} userId 
+     * @returns {Object} an object of this type
+     * {
+     *  messages: Array<String>
+     * }
+     */
     async getInfoFromDossier(dossierId, userId) {
         validateSubclassing();
     }
 
+    /**
+     * 
+     * @param {int} dossierId 
+     * @param {int} userId 
+     * @returns {void}
+     */
     async activateDossier(dossierId, userId) {
         validateSubclassing();
     }
 
+    /**
+     * 
+     * @param {int} userId 
+     * @returns {Array} an array containing objects of this type:
+     * {
+     *  id: int,
+     *  patientLabel: String
+     * }
+     */
     async getUserDossiers(userId) {
         validateSubclassing();
     }
 
+    /**
+     * 
+     * @param {int} userId 
+     * @returns {Object} an object of this type:
+     * {
+     *  id: int
+     *  pwd: String
+     * }
+     */
     async createDossier(userId) {
         validateSubclassing();
     }
 
-    async sendMessageToDossier(dossierId, userId) {
+    /**
+     * 
+     * @param {int} dossierId 
+     * @param {int} userId 
+     * @param {String} message
+     * @returns {void}
+     */
+    async sendMessageToDossier(dossierId, userId, message) {
         validateSubclassing();
     }
 }
