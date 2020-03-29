@@ -64,7 +64,7 @@ paths:
         '404':
           description: dossier id does not exist
         '409':
-          description: dossier has not been assigned to a patient yet.
+          description: user has already been assigned to this dossier. possibly not activated.
         '401':
           description: specified password is not correct
           
@@ -117,7 +117,7 @@ paths:
               
       responses:
         '200':
-          description: array of messages, ordered by date, where the first one is the last that has been sent by the nurse.
+          description: array of objects containing the dossier id and the label the first associated user gave to the dossier.
           content:
             application/json:
               schema:

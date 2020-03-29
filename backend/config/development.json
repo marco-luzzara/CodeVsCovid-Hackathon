@@ -1,5 +1,11 @@
 {
     "endpoint": "http://localhost",
     "port": 3333,
-    "mockedDataFolder": "./data"
+    "builderInstancePath": "mock/mockDbClientBuilderInstance",
+    "builderConfig": {
+        "usersFilePath": "./data/users.json",
+        "dossiersFilePath": "./data/dossiers.json",
+        "users_dossiersFilePath": "./data/users_dossiers.json",
+        "messagesFilePath": "./data/messages.json"
+    }
 }
