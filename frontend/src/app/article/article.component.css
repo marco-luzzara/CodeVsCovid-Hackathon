@@ -1,0 +1,46 @@
+mat-card {
+    position: absolute;
+    left: 3%;
+    right: 3%;
+
+    background:rgba(105, 61, 61, 0.3);
+    border-radius: 10px;
+}
+
+mat-card-title {
+    position: absolute;
+    left: 29.61%;
+    right: 36.88%;
+    top: 14.68%;
+    bottom: 52.29%;
+
+    font-family: Roboto Slab;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 32px;
+    display: flex;
+    align-items: center;
+    letter-spacing: -0.015em;
+
+    color: #000000;
+}
+
+mat-card-subtitle {
+    position: absolute;
+    left: 29.61%;
+    right: 57.66%;
+    top: 47.71%;
+    bottom: 35.78%;
+
+    font-family: Roboto Slab;
+    font-style: normal;
+    font-weight: 200;
+    font-size: 14px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    letter-spacing: -0.015em;
+
+    color: #000000;
+}

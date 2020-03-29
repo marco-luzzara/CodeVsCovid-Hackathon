@@ -1,0 +1,55 @@
+mat-card {
+    background: rgba(196, 196, 196, 0.6);
+    border-radius: 10px;
+}
+
+.container {
+    width: 80%;
+}
+
+mat-grid-list {
+    position: relative;
+    height: 109px;
+    width: 100%;
+}
+
+mat-grid-tile {
+    font-family: Roboto Slab;
+    font-style: normal;
+    font-weight: normal;
+    align-items: center;
+}
+
+.number {
+    background: #FFFFFF;
+    border-radius: 10px;
+    border-width: 10px;
+    border-color: rgba(196, 196, 196, 0.6);;
+
+    font-family: Roboto Slab;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 32px;
+    /* identical to box height */
+
+    display: flex;
+    align-items: center;
+    letter-spacing: -0.015em;
+
+    color: #000000;
+
+}
+
+.description {
+    font-family: Roboto Slab;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    letter-spacing: -0.015em;
+
+    color: #000000;
+}

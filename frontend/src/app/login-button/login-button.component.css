@@ -1,0 +1,10 @@
+button {
+    background: #DCDCDC;
+    border-radius: 10px;
+
+    font-family: Roboto Slab;
+    font-style: normal;
+    font-weight: bold;
+
+    color: #3F51B5;
+}
