@@ -183,6 +183,7 @@ components:
         dossierPwd:
           type: string
         patientLabel:
+          description: patientLabel is assigned to the newly associated dossier only if it is the first association
           type: string
     
     GetDossierInfoResponse:
@@ -200,11 +201,9 @@ components:
         properties:
           dossierId:
             type: integer
-          patientName: 
+          patientLabel: 
             type: string
-          patientLastName: 
-            type: string
-            
+
     UserRegistrationBody:
       type: object
       properties:
