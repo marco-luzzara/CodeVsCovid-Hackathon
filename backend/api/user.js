@@ -11,7 +11,7 @@ const DossierIdNotFoundError = require("../model/exceptions/logic/dossierIdNotFo
 const DossierAlreadyActivatedError = require("../model/exceptions/logic/dossierAlreadyActivatedError.js");
 
 //--------------
-const db = require('');
+const db = require('../logic/dbClientInstance');
 //--------------
 
 

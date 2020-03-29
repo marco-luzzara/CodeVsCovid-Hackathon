@@ -39,9 +39,9 @@ paths:
         '200':
           description: returns the correspondent user id
           content:
-            text/plain:
+            application/json:
               schema:
-                type: integer
+                $ref: '#/components/schemas/LoginResponse'
         '401':
           description: Invalid user credentials
           
@@ -203,6 +203,14 @@ paths:
                   
 components:
   schemas:
+    LoginResponse:
+      type: object
+      properties:
+        id: 
+          type: integer
+        isNurse:
+          type: boolean
+  
     DossierCreationResponse:
       type: object
       properties:

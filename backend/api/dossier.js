@@ -9,7 +9,7 @@ const UserNotANurseError = require("../model/exceptions/logic/userNotANurseError
 const UserIdNotFoundError = require("../model/exceptions/logic/userIdNotFoundError.js");
 const DossierNotAssociatedToUserError = require("../model/exceptions/logic/dossierNotAssociatedToUserError.js");
 //--------------
-const db = require('');
+const db = require('../logic/dbClientInstance');
 //--------------
 
 //Generate a new dossier
