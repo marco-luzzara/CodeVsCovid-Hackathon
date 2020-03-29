@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const db = require("../logic/dbClientInstance.js");
 const errorHandler = require('../utils/errorHandler.js');
 
 const DossierAlreadyActivatedError = require("../model/exceptions/logic/dossierAlreadyActivatedError.js");
@@ -8,9 +9,6 @@ const DossierIdNotFoundError = require("../model/exceptions/logic/dossierIdNotFo
 const UserNotANurseError = require("../model/exceptions/logic/userNotANurseError.js");
 const UserIdNotFoundError = require("../model/exceptions/logic/userIdNotFoundError.js");
 const DossierNotAssociatedToUserError = require("../model/exceptions/logic/dossierNotAssociatedToUserError.js");
-//--------------
-const db = require('');
-//--------------
 
 //Generate a new dossier
 router.post("/", async function(req, res){

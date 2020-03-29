@@ -4,6 +4,25 @@ const LOGIN_USER_URL = "http://localhost:3333/users/login";
 const ASSOCIATE_DOSSIER_URL = "http://localhost:3333/users/dossiers";
 
 const testUsers = "./test/resources/testUsers.json";
+const app = require("../../index.js");
+const db = require("../../../logic/dbClientInstance.js");
+
+beforeAll(async () => {
+    await app.server_starting;
+});
+
+beforeEach(() => {
+    jest.resetAllMocks();
+});
+
+function mockManagerFunction(mockFun, behaviour) {
+    return mockFun.mockImplementationOnce(() => {
+        if (behaviour !== null && behaviour.prototype instanceof Error)
+            throw new behaviour();
+        else
+            return behaviour;
+    });
+}
 
 describe("Register a new user", () => {
     test("00 - Mail not valid", () => {

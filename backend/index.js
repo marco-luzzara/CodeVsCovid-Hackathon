@@ -16,3 +16,19 @@ app.use('/dossiers', router_dossier);
 app.listen(PORT, () => {
     console.log("CodeVsCovid app is listening at port " + PORT);
 })
+
+let server_starting = new Promise((resolve, reject) => {
+
+    //If the server il already running
+    if (app.address().port == undefined)
+        resolve();
+
+    app.listen(PORT, function () {
+        console.log("CodeVsCovid app is listening at port " + PORT);
+        resolve();
+    });
+});
+
+module.exports = {
+    server_starting: server_starting
+}

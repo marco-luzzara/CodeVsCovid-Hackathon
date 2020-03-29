@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const db = require("../logic/dbClientInstance.js");
 const BodyValidator = require("../utils/BodyValidator.js").BodyValidator;
 const BodyValidatorError = require("../utils/BodyValidator.js").BodyValidatorError;
 const errorHandler = require('../utils/errorHandler.js');
@@ -9,11 +10,6 @@ const WrongUserPasswordError = require("../model/exceptions/logic/wrongUserPassw
 const WrongDossierPasswordError = require("../model/exceptions/logic/wrongDossierPasswordError.js");
 const DossierIdNotFoundError = require("../model/exceptions/logic/dossierIdNotFoundError.js");
 const DossierAlreadyActivatedError = require("../model/exceptions/logic/dossierAlreadyActivatedError.js");
-
-//--------------
-const db = require('');
-//--------------
-
 
 //Register a new user
 router.post("/", async function(req, res, next){
