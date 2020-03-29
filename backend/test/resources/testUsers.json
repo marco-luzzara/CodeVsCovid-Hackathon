@@ -1,0 +1,14 @@
+[
+    {
+        "id": 111,
+        "mail": "prova@tobi.it",
+        "pwd": "neversavemeinclear",
+        "isNurse": false
+    },
+    {
+        "id": 222,
+        "mail": "prova@tobi.it",
+        "pwd": "neversavemeinclear1",
+        "isNurse": true
+    }
+]
