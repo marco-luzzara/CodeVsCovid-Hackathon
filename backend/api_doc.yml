@@ -170,17 +170,17 @@ components:
     DossierCreationResponse:
       type: object
       properties:
-        dossierId:
+        id:
           type: integer
-        dossierPwd:
+        pwd:
           type: string
           
     DossierAssociationBody:
       type: object
       properties:
-        dossierId:
+        id:
           type: integer
-        dossierPwd:
+        pwd:
           type: string
         patientLabel:
           description: patientLabel is assigned to the newly associated dossier only if it is the first association
@@ -199,7 +199,7 @@ components:
       items:
         type: object
         properties:
-          dossierId:
+          id:
             type: integer
           patientLabel: 
             type: string
