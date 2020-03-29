@@ -1,0 +1,14 @@
+.parent-card {
+    margin : 10px 15px;
+}
+
+mat-card-header > .mat-card-header-text {
+    margin : 0px;
+}
+
+.add-relative {
+    width: 80%;
+    height: 50px;
+    margin-left: calc(100% - 90%);
+    margin-right: calc(100% - 90%);
+}

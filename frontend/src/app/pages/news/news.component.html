@@ -1,0 +1,19 @@
+<mat-card class="counters-container">
+    <div *ngFor="let counter of counters">
+        <p class="counter-title">{{counter.title}}</p>
+        <div class="counter-value">{{counter.value | shortNumber}}</div>
+    </div>
+</mat-card>
+
+<mat-card *ngFor="let article of articles" (click)="goToLink(article.url)" class="article-container">
+    <mat-card-header>
+      <div mat-card-avatar style="background-size: cover; background-image: url({{article.imgUrl}});"></div>
+      <mat-card-title>{{article.title}}</mat-card-title>
+      <mat-card-subtitle>{{article.author}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        {{article.description | slice:0:64}}...
+      </p>
+    </mat-card-content>
+  </mat-card>

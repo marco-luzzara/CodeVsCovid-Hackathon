@@ -10,6 +10,7 @@ const UserIdNotFoundError = require("../../model/exceptions/logic/userIdNotFound
 const DossierNotActivatedError = require("../../model/exceptions/logic/dossierNotActivatedError");
 const DossierIdNotFoundError = require("../../model/exceptions/logic/dossierIdNotFoundError");
 const DossierNotAssociatedToUserError = require("../../model/exceptions/logic/dossierNotAssociatedToUserError");
+const DossierAlreadyAssociatedToUserError = require("../../model/exceptions/logic/dossierAlreadyAssociatedToUserError");
 const DossierAlreadyActivatedError = require("../../model/exceptions/logic/dossierAlreadyActivatedError");
 
 function wrapInPromise(fn) {
@@ -81,8 +82,8 @@ class MockDbClient extends DbClient {
             if (dossier.pwd !== dossierObj.pwd)
                 throw new WrongDossierPasswordError(dossierObj.id);
 
-            if (!dossier.isActive)
-                throw new DossierNotActivatedError(dossierObj.id);
+            if (this.users_dossiers.find(user_dossier => user_dossier.userId === userId && user_dossier.dossierId === dossierObj.id) !== undefined)
+                throw new DossierAlreadyAssociatedToUserError(dossierObj.id, userId);
 
             if (dossier.patientLabel === null)
                 dossier.patientLabel = dossierObj.patientLabel;

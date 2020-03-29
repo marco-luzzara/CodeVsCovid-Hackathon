@@ -10,6 +10,7 @@ const UserIdNotFoundError = require("../../../model/exceptions/logic/userIdNotFo
 const DossierNotActivatedError = require("../../../model/exceptions/logic/dossierNotActivatedError");
 const DossierIdNotFoundError = require("../../../model/exceptions/logic/dossierIdNotFoundError");
 const DossierNotAssociatedToUserError = require("../../../model/exceptions/logic/dossierNotAssociatedToUserError");
+const DossierAlreadyAssociatedToUserError = require("../../../model/exceptions/logic/dossierAlreadyAssociatedToUserError");
 const DossierAlreadyActivatedError = require("../../../model/exceptions/logic/dossierAlreadyActivatedError");
 
 
@@ -104,7 +105,7 @@ describe('getUserIdFromCredentials', () => {
 });
 
 describe('associateDossierToUser', () => {
-    test('dossier has not been activated yet, should throw', async () => {
+    test('user already associated to dossier, should throw', async () => {
         const USER_ID = 11;
         let requestedDossier = {
             "id": 22,
@@ -128,7 +129,8 @@ describe('associateDossierToUser', () => {
             ]
         });
 
-        await expect(dbClient.associateDossierToUser(requestedDossier, USER_ID)).rejects.toThrow(DossierNotActivatedError);
+        await dbClient.associateDossierToUser(requestedDossier, USER_ID);
+        await expect(dbClient.associateDossierToUser(requestedDossier, USER_ID)).rejects.toThrow(DossierAlreadyAssociatedToUserError);
     });
 
     test('user id does not exist, should throw', async () => {
@@ -260,7 +262,7 @@ describe('getUserDossiers', () => {
         await expect(dbClient.getUserDossiers(USER_ID)).resolves.toEqual([]);
     });
 
-    test('multiple dossiers for a user, should return all dossiers', async () => {
+    test('multiple dossiers for a user, should return only active dossiers', async () => {
         const USER_ID = 111;
         const DOSSIERS = [
             {
@@ -270,7 +272,7 @@ describe('getUserDossiers', () => {
             },
             {
                 "id": 1,
-                "isActive": true,
+                "isActive": false,
                 "patientLabel": "testme2"
             }
         ];
@@ -289,14 +291,21 @@ describe('getUserDossiers', () => {
                 {
                     "userId": USER_ID,
                     "dossierId": 1
-                }
+                },
+                {
+                    "userId": 222,
+                    "dossierId": 1
+                },
             ],
             dossiers: DOSSIERS
         });
 
-        await expect(dbClient.getUserDossiers(USER_ID)).resolves.toEqual(
-            DOSSIERS.map(dossier => (({isActive, ...rest}) => rest)(dossier))
-        );
+        await expect(dbClient.getUserDossiers(USER_ID)).resolves.toEqual([
+            {
+                "id": 0,
+                "patientLabel": "testme1"
+            }
+        ]);
     });
 });
 

@@ -1,0 +1,10 @@
+<mat-card *ngFor="let parent of parents" class="parent-card" routerLink="/parentdetail/{{parent.id}}">
+    <mat-card-header >
+      <mat-card-title matBadge="!" matBadgeColor="accent" matBadgeHidden={{!parent.isNewMessage}}>{{parent.name}} {{parent.surname}}</mat-card-title>
+      <mat-card-subtitle>{{parent.fiscalCode}}</mat-card-subtitle>
+    </mat-card-header>
+    <!--<mat-card-actions style="margin-bottom: 0px;">
+      <a mat-button [color]="'accent'" routerLink="/parentdetail/{{parent.id}}">Show messages</a>
+    </mat-card-actions>-->
+</mat-card>
+<button mat-stroked-button [color]="'primary'" class="add-relative">Add relative</button>

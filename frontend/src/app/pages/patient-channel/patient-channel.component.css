@@ -1,0 +1,42 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 56px - 48px);
+}
+
+.parent-detail-title {
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-bottom: 0px;
+}
+
+.message-box {
+    margin: 10px;
+    padding: 10px;
+    width: fit-content;
+    height: fit-content;
+    background-color: rgb(235, 235, 235);
+    border-radius: 10px;
+    position: relative;
+}
+
+.message-text {
+    margin-right: 25px;
+}
+
+.delete-messsage-btn {
+    right: 0px;
+    top: 0px;
+    position: absolute;
+}
+
+.input-msg-form {
+    margin-top: auto;
+}
+
+.full-width {
+    width: calc(100% - 20px);
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
