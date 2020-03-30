@@ -53,7 +53,7 @@ router.post("/login", async function(req, res){
         BodyValidator.validate(body, requiredFields);
 
         let result = await db.getUserIdFromCredentials(body.mail, body.pwd);
-        res.status(200).send(result.toString());
+        res.status(200).json(result);
     } catch (exc){
         errorHandler(res, exc, {
             "400": [BodyValidatorError],
