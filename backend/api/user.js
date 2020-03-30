@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require("../logic/dbClientInstance.js");
+const db = require('../logic/dbClientInstance');
 const BodyValidator = require("./utils/BodyValidator.js").BodyValidator;
 const BodyValidatorError = require("./utils/BodyValidator.js").BodyValidatorError;
 const errorHandler = require('./utils/errorHandler.js');
@@ -28,8 +28,9 @@ router.post("/", async function(req, res, next){
     try {
         BodyValidator.validate(body, requiredFields);
 
-        let result = await db.addNewUser(body);
-        res.status(201).send(result.toString());
+        let userObj = await db.addNewUser(body);
+        
+        res.status(201).json(userObj);
     } catch (exc) {
         errorHandler(res, exc, {
             "400": [BodyValidatorError],

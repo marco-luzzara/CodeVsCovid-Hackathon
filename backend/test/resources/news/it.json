@@ -1,0 +1,34 @@
+[
+    {
+        "source": {
+            "id": null,
+            "name": "Quotidiano.net"
+        },
+        "author": "QuotidianoNet",
+        "title": "Coronavirus Italia. Abruzzo, 3 morti in poche ore in un paesino, 11 in totale - QUOTIDIANO.NET",
+        "description": "In Veneto i casi salgono a 8.358, 28 in pi\u00f9 di ieri. Quasi 400 morti, 14 in pi\u00f9. In Alto Adige la curva dei contagi riprende a salire. Nelle Marche 185 nuovi positivi. \"Quattromila contagi tra gli infermieri in Italia\"",
+        "url": "https://www.quotidiano.net/cronaca/coronavirus-news-italia-1.5086236",
+        "urlToImage": "https://immagini.quotidiano.net/?url=http%3A%2F%2Fp1014p.quotidiano.net%3A80%2Fpolopoly_fs%2F1.5086240.1585474126%21%2FhttpImage%2Fimage.jpg_gen%2Fderivatives%2Fwidescreen%2Fimage.jpg&w=700&h=391",
+        "publishedAt": "2020-03-29T12:34:03Z",
+        "content": "Roma, 29 marzo 2020 - Superati i 90mila casi e i 10mila morti in Italia secondo l'ultimo bollettino della Protezione civile sull'emergenza Coronavirus. Intanto nuovi dati arrivano dalle regioni in mattinata. Sale a 8.358 il numero dei positivi in Veneto dall'\u2026 [+2449 chars]",
+        "translated_title": "Coronavirus Italy. Abruzzo, 3 dead in a few hours in a landscaper, 11 in total-QUOTIDIANO.NET",
+        "sentiment_basic": -0.6486,
+        "sentiment_scaled": 0.0
+    },
+    {
+        "source": {
+            "id": null,
+            "name": "Quotidiano.net"
+        },
+        "author": "QuotidianoNet",
+        "title": "Coronavirus, Boccia: \"Inevitabile prorogare misure dopo il 3 aprile\" - QUOTIDIANO.NET",
+        "description": "\"Regioni da sole sarebbero crollate\". Scontro con la Lombardia: \"Parole avventate e inopportune\". E Zaia: \"Spero che quello di Boccia sia stato uno scivolone\". Il ministro: \"Nessuna polemica, solo realismo\". Speranza: \"Non abbassare ora la guardia, siamo anco\u2026",
+        "url": "https://www.quotidiano.net/cronaca/coronavirus-quando-finira-1.5086295",
+        "urlToImage": "https://immagini.quotidiano.net/?url=http%3A%2F%2Fp1014p.quotidiano.net%3A80%2Fpolopoly_fs%2F1.5086311.1585479754%21%2FhttpImage%2Fimage.jpg_gen%2Fderivatives%2Fwidescreen%2Fimage.jpg&w=700&h=391",
+        "publishedAt": "2020-03-29T12:31:44Z",
+        "content": "Roma, 29 marzo 2020 - Pare ormai scontata la proroga delle misure anti coronavirus oltre il 3 aprile, data in cui terminano le restrizioni attuali. Alle parole di ieri di Conte, che gi\u00e0\u00a0lasciavano intendere la decisione, oggi si aggiungono quelle di Francesco\u2026 [+4237 chars]",
+        "translated_title": "Coronavirus, Boccia : \"Inevitable to extend measures after April 3\"-QUOTIDIANO.NET",
+        "sentiment_basic": 0.1779,
+        "sentiment_scaled": 0.5494980386942357
+    }
+]

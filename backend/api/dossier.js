@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require("../logic/dbClientInstance.js");
+const db = require('../logic/dbClientInstance');
 const errorHandler = require('./utils/errorHandler.js');
 
 const DossierAlreadyActivatedError = require("../model/exceptions/logic/dossierAlreadyActivatedError.js");

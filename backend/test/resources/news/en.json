@@ -1,0 +1,66 @@
+[
+    {
+        "source": {
+            "id": null,
+            "name": "Dailymail.co.uk"
+        },
+        "author": "authorTest",
+        "title": "titleTest",
+        "description": "descriptionTest",
+        "url": "urlTest",
+        "urlToImage": "urlToImageTest",
+        "publishedAt": "2020-03-29T12:47:41Z",
+        "content": "contentTest",
+        "translated_title": "translatedTitleTest",
+        "sentiment_basic": 0.0,
+        "sentiment_scaled": 0.832656
+    },
+    {
+        "source": {
+            "id": null,
+            "name": "Dailymail.co.uk"
+        },
+        "author": "By Niomi Harris For Mailonline",
+        "title": "Christiano Ronaldo and girlfriend Georgina Rodriguez take a stroll with their children amid lockdown - Daily Mail",
+        "description": "The footballer, 35, and the Spanish beauty, 26, cut casual figures as they took a break from quarantine to enjoy a stroll with\u00a0two of their children in\u00a0Funchal, Portugal on Saturday.",
+        "url": "https://www.dailymail.co.uk/tvshowbiz/article-8164619/Christiano-Ronaldo-girlfriend-Georgina-Rodriguez-stroll-children-amid-lockdown.html",
+        "urlToImage": "https://i.dailymail.co.uk/1s/2020/03/29/10/26545862-0-image-a-33_1585475165127.jpg",
+        "publishedAt": "2020-03-29T12:47:41Z",
+        "content": "They've been in self-isolation in a bid to help stem the spread of the COVID-19 virus.\r\nAnd Christiano Ronaldo and girlfriend Georgina Rodriguez took a break from quarantine to enjoy a stroll with\u00a0two of their children in\u00a0Funchal, Portugal on Saturday.\r\nThe f\u2026 [+4746 chars]",
+        "translated_title": "Christiano Ronaldo and girlfriend Georgina Rodriguez take a stroll with their children amid lockdown - Daily Mail",
+        "sentiment_basic": 0.0,
+        "sentiment_scaled": 0.5769936485532815
+    },
+    {
+        "source": {
+            "id": null,
+            "name": "Liverpoolecho.co.uk"
+        },
+        "author": "Jonathan Humphries",
+        "title": "12 police officers storm club 'breaking lockdown rules' but find it empty - Liverpool Echo",
+        "description": "A tip-off led police to rush to the venue ready to shut it down",
+        "url": "https://www.liverpoolecho.co.uk/news/liverpool-news/12-police-officers-storm-club-18001795",
+        "urlToImage": "https://i2-prod.liverpoolecho.co.uk/incoming/article18002697.ece/ALTERNATES/s1200/0_clubpolice.jpg",
+        "publishedAt": "2020-03-29T12:36:57Z",
+        "content": "An unfortunate misunderstanding led to around 12 police officers surrounding a comedy club ready to shut it down - only to find it empty and deserted. \r\nWith the coronavirus lockdown cancelling all their upcoming events, the Hot Water Comedy Club, in Hardman \u2026 [+2210 chars]",
+        "translated_title": "12 police officers storm club 'breaking lockdown rules' but find it empty - Liverpool Echo",
+        "sentiment_basic": -0.296,
+        "sentiment_scaled": 0.36810162314749467
+    },
+    {
+        "source": {
+            "id": null,
+            "name": "Sky.com"
+        },
+        "author": "Bethany Minelle, news reporter",
+        "title": "Plaistow: Woman found dead in church grounds had suffered head injuries - Sky News",
+        "description": "Kelly Stewart, who was from Newham, was found in the grounds of Plaistow Memorial Community Church.",
+        "url": "https://news.sky.com/story/plaistow-woman-found-dead-in-church-grounds-had-suffered-head-injuries-11965200",
+        "urlToImage": "https://e3.365dm.com/20/03/1600x900/skynews-kelly-stewart-barking-road_4957581.jpg?20200329080520",
+        "publishedAt": "2020-03-29T12:05:33Z",
+        "content": null,
+        "translated_title": "Plaistow: Woman found dead in church grounds had suffered head injuries - Sky News",
+        "sentiment_basic": -0.8176,
+        "sentiment_scaled": 0.0
+    }
+]
