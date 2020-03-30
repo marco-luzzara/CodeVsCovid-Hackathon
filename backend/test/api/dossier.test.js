@@ -41,10 +41,10 @@ function mockManagerFunction(mockFun, behaviour) {
 describe("Get all messages for a dossier", () => {
     const PATH = "http://localhost:3333/dossiers/";
 
-    test("00 - Wrong uid", () => {
+    test("00 - Wrong User-Id", () => {
         let options = {
             method: 'GET',
-            headers: {'uid': 'hello'}
+            headers: {'User-Id': 'hello'}
         }
 
         return fetch(PATH + 111, options).then(
@@ -54,7 +54,7 @@ describe("Get all messages for a dossier", () => {
         )
     });
 
-    test("01 - Missing uid", () => {
+    test("01 - Missing User-Id", () => {
         let options = {
             method: 'GET'
         }
@@ -69,7 +69,7 @@ describe("Get all messages for a dossier", () => {
     test("02 - Wrong dossierId", () => {
         let options = {
             method: 'GET',
-            headers: {'uid': 111}
+            headers: {'User-Id': '111'}
         }
 
         return fetch(PATH + "hello", options).then(
@@ -82,7 +82,7 @@ describe("Get all messages for a dossier", () => {
     test("03 - Missing dossierId", () => {
         let options = {
             method: 'GET',
-            headers: {'uid': 111}
+            headers: {'User-Id': 111}
         }
 
         return fetch(PATH, options).then(
@@ -97,7 +97,7 @@ describe("Get all messages for a dossier", () => {
 
         let options = {
             method: 'GET',
-            headers: {'uid': '111'}
+            headers: {'User-Id': '111'}
         }
 
         return fetch(PATH + 222, options).then(
@@ -112,7 +112,7 @@ describe("Get all messages for a dossier", () => {
 
         let options = {
             method: 'GET',
-            headers: {'uid': 111}
+            headers: {'User-Id': 111}
         }
 
         return fetch(PATH + 222, options).then(
@@ -127,7 +127,7 @@ describe("Get all messages for a dossier", () => {
 
         let options = {
             method: 'GET',
-            headers: {'uid': '111'}
+            headers: {'User-Id': '111'}
         }
 
         return fetch(PATH + 222, options).then(
@@ -142,7 +142,7 @@ describe("Get all messages for a dossier", () => {
 
         let options = {
             method: 'GET',
-            headers: {'uid': 111}
+            headers: {'User-Id': 111}
         }
 
         return fetch(PATH + 222, options).then(
@@ -159,7 +159,7 @@ describe("Get all dossiers for a user", () => {
     test("00 - Wrong userId", () => {
         let options = {
             method: 'GET',
-            headers: {'uid': "hello"}
+            headers: {'User-Id': "hello"}
         }
 
         return fetch(PATH, options).then(
@@ -185,7 +185,7 @@ describe("Get all dossiers for a user", () => {
         mockManagerFunction(db.getUserDossiers, []);
         let options = {
             method: 'GET',
-            headers: {'uid': 111}
+            headers: {'User-Id': 111}
         }
 
         return fetch(PATH, options).then(
@@ -202,7 +202,7 @@ describe("Activate a dossier", () => {
     test("00 - Wrong userId", () => {
         let options = {
             method: 'PUT',
-            headers: {'uid': "hello"}
+            headers: {'User-Id': "hello"}
         }
 
         return fetch(PATH + 222, options).then(
@@ -227,7 +227,7 @@ describe("Activate a dossier", () => {
     test("02 - Missing dossierId", () => {
         let options = {
             method: 'PUT',
-            headers: {'uid': '111'}
+            headers: {'User-Id': '111'}
         }
 
         return fetch(PATH, options).then(
@@ -240,7 +240,7 @@ describe("Activate a dossier", () => {
     test("03 - Wrong dossierId", () => {
         let options = {
             method: 'PUT',
-            headers: {'uid': '111'}
+            headers: {'User-Id': '111'}
         }
 
         return fetch(PATH + "hello", options).then(
@@ -255,7 +255,7 @@ describe("Activate a dossier", () => {
 
         let options = {
             method: 'PUT',
-            headers: {'uid': 111}
+            headers: {'User-Id': 111}
         }
 
         return fetch(PATH + 111, options).then(
@@ -270,7 +270,7 @@ describe("Activate a dossier", () => {
         
         let options = {
             method: 'PUT',
-            headers: {'uid': 111}
+            headers: {'User-Id': 111}
         }
 
         return fetch(PATH + 111, options).then(
@@ -285,7 +285,7 @@ describe("Activate a dossier", () => {
         
         let options = {
             method: 'PUT',
-            headers: {'uid': 111}
+            headers: {'User-Id': 111}
         }
 
         return fetch(PATH + 111, options).then(
@@ -300,7 +300,7 @@ describe("Activate a dossier", () => {
         
         let options = {
             method: 'PUT',
-            headers: {'uid': 111}
+            headers: {'User-Id': 111}
         }
 
         return fetch(PATH + 111, options).then(
@@ -317,7 +317,7 @@ describe("Generate a new dossier", () => {
     test("00 - Wrong userId", () => {
         let options = {
             method: 'POST',
-            headers: {'uid': 'hello'}
+            headers: {'User-Id': 'hello'}
         }
 
         return fetch(PATH, options).then(
@@ -344,7 +344,7 @@ describe("Generate a new dossier", () => {
 
         let options = {
             method: 'POST',
-            headers: {'uid': 111}
+            headers: {'User-Id': 111}
         }
 
         return fetch(PATH, options).then(
@@ -359,7 +359,7 @@ describe("Generate a new dossier", () => {
 
         let options = {
             method: 'POST',
-            headers: {'uid': 111}
+            headers: {'User-Id': 111}
         }
 
         return fetch(PATH, options).then(
@@ -377,7 +377,7 @@ describe("Send messages", () => {
         let options = {
             method: 'POST',
             body: "messageText",
-            headers: {'Content-Type': 'text/plain', 'uid': 'hello'}
+            headers: {'Content-Type': 'text/plain', 'User-Id': 'hello'}
         }
 
         return fetch(PATH + "111/messages", options).then(
@@ -404,7 +404,7 @@ describe("Send messages", () => {
     test("02 - Missing message", () => {
         let options = {
             method: 'POST',
-            headers: {'uid': 111}
+            headers: {'User-Id': 111}
         }
 
         return fetch(PATH + "111/messages", options).then(
@@ -418,7 +418,7 @@ describe("Send messages", () => {
         let options = {
             method: 'POST',
             body: "",
-            headers: {'Content-Type': 'text/plain', 'uid': 111}
+            headers: {'Content-Type': 'text/plain', 'User-Id': 111}
         }
 
         return fetch(PATH + "111/messages", options).then(
@@ -432,7 +432,7 @@ describe("Send messages", () => {
         let options = {
             method: 'POST',
             body: "messageText",
-            headers: {'Content-Type': 'text/plain', 'uid': 111}
+            headers: {'Content-Type': 'text/plain', 'User-Id': 111}
         }
 
         return fetch(PATH + "/messages", options).then(
@@ -446,7 +446,7 @@ describe("Send messages", () => {
         let options = {
             method: 'POST',
             body: "messageText",
-            headers: {'Content-Type': 'text/plain', 'uid': 111}
+            headers: {'Content-Type': 'text/plain', 'User-Id': 111}
         }
 
         return fetch(PATH + "aaa/messages", options).then(
@@ -462,7 +462,7 @@ describe("Send messages", () => {
         let options = {
             method: 'POST',
             body: "messageText",
-            headers: {'Content-Type': 'text/plain', 'uid': '111'}
+            headers: {'Content-Type': 'text/plain', 'User-Id': '111'}
         }
 
         return fetch(PATH + "111/messages", options).then(
@@ -478,7 +478,7 @@ describe("Send messages", () => {
         let options = {
             method: 'POST',
             body: "messageText",
-            headers: {'Content-Type': 'text/plain', 'uid': '111'}
+            headers: {'Content-Type': 'text/plain', 'User-Id': '111'}
         }
 
         return fetch(PATH + "1111/messages", options).then(
@@ -494,7 +494,7 @@ describe("Send messages", () => {
         let options = {
             method: 'POST',
             body: "messageText",
-            headers: {'Content-Type': 'text/plain', 'uid': '111'}
+            headers: {'Content-Type': 'text/plain', 'User-Id': '111'}
         }
 
         return fetch(PATH + "111/messages", options).then(
