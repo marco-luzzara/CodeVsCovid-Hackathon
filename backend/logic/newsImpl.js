@@ -30,7 +30,9 @@ class NewsImpl {
         if (typeof(dataMap) === 'string') {
             let initNewsRepoMap = () => {
                 fs.readdirSync(dataMap).forEach(countryNewsFileName => {
-                    let countryId = path.parse(countryNewsFileName).name.toLowerCase();
+                    let tokenizedFileName = countryNewsFileName.split('_');
+
+                    let countryId = tokenizedFileName[1].toLowerCase();
                     let countryNewsPath = path.join(dataMap, countryNewsFileName);
                     let countryNewsRepo = JSON.parse(fs.readFileSync(countryNewsPath, 'utf8'));
 
