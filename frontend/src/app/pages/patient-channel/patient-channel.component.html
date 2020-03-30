@@ -1,19 +1,22 @@
-<h2 class="mat-title parent-detail-title">{{parent.name}} {{parent.surname}}</h2>
-<h3 class="mat-subheading-2 parent-detail-title">{{parent.fiscalCode}}</h3>
-<div *ngFor="let message of messages" class="message-box">
-    <button mat-icon-button color="warn" class="delete-messsage-btn">
+<h2 class="mat-title parent-detail-title">{{parent.label}}</h2>
+<!--<h3 class="mat-subheading-2 parent-detail-title">{{parent.fiscalCode}}</h3>-->
+<div class="messages-list-container">
+  <div *ngFor="let message of messages" class="message-box">
+    <!--<button mat-icon-button color="warn" class="delete-messsage-btn">
         <mat-icon>delete</mat-icon>
-    </button>
+    </button>-->
     <p class="message-text">{{message}}</p>
+  </div>
 </div>
-<form class="input-msg-form">
-    <mat-form-field class="full-width">
-      <mat-label>Message</mat-label>
-      <input matInput #message maxlength="256" placeholder="Ex. I need help with...">
-      <mat-hint align="start"><strong>Write something to relatives</strong> </mat-hint>
-      <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
-      <button mat-icon-button color="warn" class="delete-messsage-btn">
-        <mat-icon>send</mat-icon>
-    </button>
-    </mat-form-field>
-  </form>
+<div class="input-msg-form">
+  <mat-form-field class="full-width">
+    <mat-label>Message</mat-label>
+    <input matInput #message maxlength="256" [(ngModel)]="newMessage">
+    <mat-hint align="start"><strong>Write something to relatives</strong> </mat-hint>
+    <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+
+  </mat-form-field>
+  <button mat-icon-button color="warn" class="send-messsage-btn" (click)="sendMessage()">
+    <mat-icon>send</mat-icon>
+  </button>
+</div>

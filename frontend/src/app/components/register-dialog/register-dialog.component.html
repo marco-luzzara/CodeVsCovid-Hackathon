@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Insert your login data</h1>
+<div mat-dialog-content>
+    <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input type="email" matInput [(ngModel)]="data.email">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input type="password" matInput [(ngModel)]="data.password">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Confirm Password</mat-label>
+        <input type="password" matInput [(ngModel)]="data.passwordCheck">
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Close</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Submit</button>
+</div>

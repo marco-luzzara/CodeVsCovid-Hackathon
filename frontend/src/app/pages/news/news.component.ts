@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Article } from 'src/app/models/article';
+import { ApiService } from 'src/app/services/api/api.service';
 
 const COUNTERS = [{
   title: "Death",
@@ -14,15 +15,7 @@ const COUNTERS = [{
   value : 3126
 }]
 
-const ARTICLES : Article[] = [
-  {
-    title : "Test articolo",
-    author : "Pino gino",
-    description : "orem Ipsum è un testo segnaposto utilizzato nel settore della tipografia e della stampa. Lorem Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione. È sopravvissuto non solo a più di cinque secoli, ma anche al passaggio alla videoimpaginazione, pervenendoci sostanzialmen",
-    imgUrl : "https://www.geekoo.it/wp-content/uploads/2015/05/IMG_0179.png",
-    url : "https://www.newsrimini.it/2020/03/le-immagini-di-un-mese-di-emergenza/"
-  }
-]
+
 
 @Component({
   selector: 'app-news',
@@ -33,16 +26,39 @@ export class NewsComponent implements OnInit {
 
   public counters;
   public articles : Article[];
+  public sentimentValue : number;
 
-  constructor() { }
+  constructor(private apiService : ApiService) {
+    this.sentimentValue = localStorage.getItem("sentiment") ? +localStorage.getItem("sentiment") : 0;
+    this.apiService.getNews(this.sentimentValue).subscribe(news => {
+      news.forEach(article => {
+        const formattedDate = new Date(Date.parse(article.publishedAt));
+        article.publishedAt = formattedDate.toString()
+      })
+      this.articles = news;
+    })
+  }
+
 
   ngOnInit() {
     this.counters = COUNTERS;
-    this.articles = ARTICLES;
   }
 
   public goToLink(url: string){
     window.open(url, "_blank");
+  }
+
+  public sentimentChanged(event) {
+    console.log(event)
+    localStorage.setItem("sentiment", event.value);
+    this.apiService.getNews(this.sentimentValue).subscribe(news => {
+      news.forEach(article => {
+        const formattedDate = new Date(Date.parse(article.publishedAt));
+        article.publishedAt = formattedDate.toString()
+      })
+      this.articles = news;
+    })
+
   }
 
 }

@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule }    from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,6 +10,7 @@ import { ParentsListComponent } from './pages/parents-list/parents-list.componen
 import { ParentsDetailsComponent } from './pages/parents-details/parents-details.component';
 import { PatientChannelComponent } from './pages/patient-channel/patient-channel.component';
 import { ScannerComponent } from './pages/scanner/scanner.component';
+import { FormsModule } from '@angular/forms';
 
 //Material components
 import {MatTabsModule} from '@angular/material/tabs';
@@ -21,10 +23,17 @@ import {MatBadgeModule} from '@angular/material/badge';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatRippleModule} from '@angular/material/core';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatSliderModule} from '@angular/material/slider';
 
 //QR scanner
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { ShortNumberPipe } from './pipes/short-number.pipe';
+import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
+import { RegisterDialogComponent } from './components/register-dialog/register-dialog.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './services/auth/token.interceptor';
+import { AddRelativeDialogComponent } from './components/add-relative-dialog/add-relative-dialog.component'
 
 const MATERIAL_MODULES = [
   MatTabsModule,
@@ -35,7 +44,9 @@ const MATERIAL_MODULES = [
   MatBadgeModule,
   MatInputModule,
   MatFormFieldModule,
-  MatRippleModule
+  MatRippleModule,
+  MatDialogModule,
+  MatSliderModule
 ]
 
 @NgModule({
@@ -47,16 +58,32 @@ const MATERIAL_MODULES = [
     PatientChannelComponent,
     ScannerComponent,
     MessageComponent,
-    ShortNumberPipe
+    ShortNumberPipe,
+    LoginDialogComponent,
+    RegisterDialogComponent,
+    AddRelativeDialogComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     ZXingScannerModule,
+    HttpClientModule,
+    FormsModule,
     ...MATERIAL_MODULES
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
+  ],
+  bootstrap: [AppComponent],
+  entryComponents : [
+    LoginDialogComponent,
+    RegisterDialogComponent,
+    AddRelativeDialogComponent
+  ]
 })
 export class AppModule { }
