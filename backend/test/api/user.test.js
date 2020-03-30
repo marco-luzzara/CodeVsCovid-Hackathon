@@ -1,27 +1,31 @@
+jest.mock("../../logic/dbClientInstance.js");
+
 const fetch = require('node-fetch');
 const REGISTER_USER_URL = "http://localhost:3333/users";
 const LOGIN_USER_URL = "http://localhost:3333/users/login";
 const ASSOCIATE_DOSSIER_URL = "http://localhost:3333/users/dossiers";
 
 const testUsers = "./test/resources/testUsers.json";
+const db = require("../../logic/dbClientInstance.js");
 const app = require("../../index.js");
-const db = require("../../../logic/dbClientInstance.js");
 
 // exceptions
-const WrongUserPasswordError = require("../../../model/exceptions/logic/wrongUserPasswordError");
-const WrongDossierPasswordError = require("../../../model/exceptions/logic/wrongDossierPasswordError");
-const UserMailNotFoundError = require("../../../model/exceptions/logic/userMailNotFoundError");
-const UserMailAlreadyExistsError = require("../../../model/exceptions/logic/userMailAlreadyExistsError");
-const UserNotANurseError = require("../../../model/exceptions/logic/userNotANurseError");
-const UserIdNotFoundError = require("../../../model/exceptions/logic/userIdNotFoundError");
-const DossierNotActivatedError = require("../../../model/exceptions/logic/dossierNotActivatedError");
-const DossierIdNotFoundError = require("../../../model/exceptions/logic/dossierIdNotFoundError");
-const DossierNotAssociatedToUserError = require("../../../model/exceptions/logic/dossierNotAssociatedToUserError");
-const DossierAlreadyAssociatedToUserError = require("../../../model/exceptions/logic/dossierAlreadyAssociatedToUserError");
-const DossierAlreadyActivatedError = require("../../../model/exceptions/logic/dossierAlreadyActivatedError");
+const WrongUserPasswordError = require("../../model/exceptions/logic/wrongUserPasswordError");
+const WrongDossierPasswordError = require("../../model/exceptions/logic/wrongDossierPasswordError");
+const UserMailNotFoundError = require("../../model/exceptions/logic/userMailNotFoundError");
+const UserMailAlreadyExistsError = require("../../model/exceptions/logic/userMailAlreadyExistsError");
+const UserNotANurseError = require("../../model/exceptions/logic/userNotANurseError");
+const UserIdNotFoundError = require("../../model/exceptions/logic/userIdNotFoundError");
+const DossierNotActivatedError = require("../../model/exceptions/logic/dossierNotActivatedError");
+const DossierIdNotFoundError = require("../../model/exceptions/logic/dossierIdNotFoundError");
+const DossierNotAssociatedToUserError = require("../../model/exceptions/logic/dossierNotAssociatedToUserError");
+const DossierAlreadyAssociatedToUserError = require("../../model/exceptions/logic/dossierAlreadyAssociatedToUserError");
+const DossierAlreadyActivatedError = require("../../model/exceptions/logic/dossierAlreadyActivatedError");
+
+var server = undefined;
 
 beforeAll(async () => {
-    await app.server_starting;
+    server = await app.startServer();
 });
 
 beforeEach(() => {
@@ -29,7 +33,8 @@ beforeEach(() => {
 });
 
 afterAll(async () => {
-    await app.stop_server;
+    await app.stopServer(server);
+    server = undefined;
 });
 
 function mockManagerFunction(mockFun, behaviour) {
@@ -113,9 +118,11 @@ describe("Register a new user", () => {
     });
 
     test("05 - Mail already exists", () => {
+        mockManagerFunction(db.addNewUser, UserMailAlreadyExistsError);
+
         let options = {
             method: 'POST',
-            body: JSON.stringify({mail: testUsers[0].mail, pwd: "pwd", role: true}),
+            body: JSON.stringify({mail: "mail", pwd: "pwd", role: true}),
             headers: {'Content-Type': 'application/json'}
         }
 
@@ -201,9 +208,11 @@ describe("User login", () => {
     });
 
     test("04 - User not recognized - wrong password", () => {
+        mockManagerFunction(db.getUserIdFromCredentials, WrongUserPasswordError);
+
         let options = {
             method: 'POST',
-            body: JSON.stringify({mail: testUsers[0].mail, pwd: testUsers[0].pwd + "abc"}),
+            body: JSON.stringify({mail: "mail", pwd: "pwd"}),
             headers: {'Content-Type': 'application/json'}
         }
 
@@ -215,9 +224,11 @@ describe("User login", () => {
     });
 
     test("05 - User not recognized - wrong mail", () => {
+        mockManagerFunction(db.getUserIdFromCredentials, UserMailNotFoundError);
+
         let options = {
             method: 'POST',
-            body: JSON.stringify({mail: testUsers[0].mail + "abc", pwd: testUsers[0].pwd}),
+            body: JSON.stringify({mail: "mail", pwd: "pwd"}),
             headers: {'Content-Type': 'application/json'}
         }
 
@@ -247,7 +258,7 @@ describe("User login", () => {
 
         let options = {
             method: 'POST',
-            body: JSON.stringify({mail: testUsers[0].mail, pwd: testUsers[0].pwd}),
+            body: JSON.stringify({mail: "mail", pwd: "pwd"}),
             headers: {'Content-Type': 'application/json'}
         }
 
@@ -292,7 +303,7 @@ describe("Dossier association to a user", () => {
         let options = {
             method: 'POST',
             body: JSON.stringify({dossierId: "hello", dossierPwd: "pwd", patientLabel: "label"}),
-            headers: {'Content-Type': 'application/json', 'uid': 111}
+            headers: {'Content-Type': 'application/json', 'uid': '111'}
         }
 
         return fetch(ASSOCIATE_DOSSIER_URL, options).then(

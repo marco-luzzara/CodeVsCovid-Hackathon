@@ -3,13 +3,18 @@ const router = express.Router();
 const db = require("../logic/dbClientInstance.js");
 const BodyValidator = require("./utils/BodyValidator.js").BodyValidator;
 const BodyValidatorError = require("./utils/BodyValidator.js").BodyValidatorError;
-const errorHandler = require('./utils/errorHandler.js.js');
+const errorHandler = require('./utils/errorHandler.js');
 
 const UserMailAlreadyExistsError = require("../model/exceptions/logic/userMailAlreadyExistsError.js");
 const WrongUserPasswordError = require("../model/exceptions/logic/wrongUserPasswordError.js");
 const WrongDossierPasswordError = require("../model/exceptions/logic/wrongDossierPasswordError.js");
 const DossierIdNotFoundError = require("../model/exceptions/logic/dossierIdNotFoundError.js");
 const DossierAlreadyActivatedError = require("../model/exceptions/logic/dossierAlreadyActivatedError.js");
+const UserMailNotFoundError = require("../model/exceptions/logic/userMailNotFoundError.js");
+
+function canBeParsedInt(n) {
+    return Number(n) === parseInt(n);
+}
 
 //Register a new user
 router.post("/", async function(req, res, next){
@@ -24,10 +29,7 @@ router.post("/", async function(req, res, next){
         BodyValidator.validate(body, requiredFields);
 
         let result = await db.addNewUser(body);
-        if (result != undefined)
-            res.status(201).send(result);
-        else    
-            res.status(500).json({message: "Cannot create a new user"});
+        res.status(201).send(result.toString());
     } catch (exc) {
         errorHandler(res, exc, {
             "400": [BodyValidatorError],
@@ -49,14 +51,11 @@ router.post("/login", async function(req, res){
         BodyValidator.validate(body, requiredFields);
 
         let result = await db.getUserIdFromCredentials(body.mail, body.pwd);
-        if (result != undefined)
-            res.status(200).send(result);
-        else    
-            res.status(401).end();
+        res.status(200).send(result.toString());
     } catch (exc){
         errorHandler(res, exc, {
             "400": [BodyValidatorError],
-            "401": [WrongUserPasswordError],
+            "401": [WrongUserPasswordError, UserMailNotFoundError],
             "500": [null]
         })
     }
@@ -73,7 +72,7 @@ router.post("/dossiers", async function(req, res){
         patientLabel: "string"
     };
 
-    if (uid == undefined || typeof uid !== 'number'){
+    if (uid == undefined || !canBeParsedInt(uid)){
         res.status(401).end();
         return;
     }

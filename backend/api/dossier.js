@@ -10,10 +10,14 @@ const UserNotANurseError = require("../model/exceptions/logic/userNotANurseError
 const UserIdNotFoundError = require("../model/exceptions/logic/userIdNotFoundError.js");
 const DossierNotAssociatedToUserError = require("../model/exceptions/logic/dossierNotAssociatedToUserError.js");
 
+function canBeParsedInt(n) {
+    return Number(n) === parseInt(n);
+}
+
 //Generate a new dossier
 router.post("/", async function(req, res){
     let uid = req.headers.uid;
-    if (uid == undefined || typeof uid !== 'number'){
+    if (uid == undefined || !canBeParsedInt(uid)){
         res.status(401).end();
         return;
     }
@@ -37,7 +41,7 @@ router.put("/", async function(req, res){
     let uid = req.headers.uid;
     let dossierId = req.query.dossierId;
 
-    if (uid == undefined || typeof uid !== 'number'){
+    if (uid == undefined || !canBeParsedInt(uid)){
         res.status(401).end();
         return;
     }
@@ -48,8 +52,7 @@ router.put("/", async function(req, res){
 
     try {
         let result = await db.activateDossier(dossierId, uid);
-        let status = (result != undefined) ? 200 : 404;
-        res.status(status).end();
+        res.status(200).end();
     } catch (exc){
         errorHandler(res, exc, {
             "401": [UserNotANurseError],
@@ -65,7 +68,7 @@ router.get("/:dossierId", async function(req, res){
     let uid = req.headers.uid;
     let dossierId = req.params.dossierId;
 
-    if (uid == undefined || typeof uid !== 'number'){
+    if (uid == undefined || !canBeParsedInt(uid)){
         res.status(401).end();
         return;
     }
@@ -93,7 +96,7 @@ router.get("/:dossierId", async function(req, res){
 //Retrieve base information of all the dossiers
 router.get("/", async function(req, res){
     let uid = req.headers.uid;
-    if (uid == undefined || typeof uid !== 'number'){
+    if (uid == undefined || !canBeParsedInt(uid)){
         res.status(401).end();
         return;
     }
@@ -117,7 +120,7 @@ router.post("/:dossierId/messages", async function(req, res){
     let dossierId = req.params.dossierId;
     let message = req.body;
 
-    if (uid == undefined || typeof uid !== 'number'){
+    if (uid == undefined || !canBeParsedInt(uid)){
         res.status(401).end();
         return;
     }

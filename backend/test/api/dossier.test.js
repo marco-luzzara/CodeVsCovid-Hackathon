@@ -1,19 +1,21 @@
+jest.mock("../../logic/dbClientInstance.js");
+
 const fetch = require('node-fetch');
+const db = require("../../logic/dbClientInstance.js");
 const app = require("../../index.js");
-const db = require("../../../logic/dbClientInstance.js");
 
 // exceptions
-const WrongUserPasswordError = require("../../../model/exceptions/logic/wrongUserPasswordError");
-const WrongDossierPasswordError = require("../../../model/exceptions/logic/wrongDossierPasswordError");
-const UserMailNotFoundError = require("../../../model/exceptions/logic/userMailNotFoundError");
-const UserMailAlreadyExistsError = require("../../../model/exceptions/logic/userMailAlreadyExistsError");
-const UserNotANurseError = require("../../../model/exceptions/logic/userNotANurseError");
-const UserIdNotFoundError = require("../../../model/exceptions/logic/userIdNotFoundError");
-const DossierNotActivatedError = require("../../../model/exceptions/logic/dossierNotActivatedError");
-const DossierIdNotFoundError = require("../../../model/exceptions/logic/dossierIdNotFoundError");
-const DossierNotAssociatedToUserError = require("../../../model/exceptions/logic/dossierNotAssociatedToUserError");
-const DossierAlreadyAssociatedToUserError = require("../../../model/exceptions/logic/dossierAlreadyAssociatedToUserError");
-const DossierAlreadyActivatedError = require("../../../model/exceptions/logic/dossierAlreadyActivatedError");
+const WrongUserPasswordError = require("../../model/exceptions/logic/wrongUserPasswordError");
+const WrongDossierPasswordError = require("../../model/exceptions/logic/wrongDossierPasswordError");
+const UserMailNotFoundError = require("../../model/exceptions/logic/userMailNotFoundError");
+const UserMailAlreadyExistsError = require("../../model/exceptions/logic/userMailAlreadyExistsError");
+const UserNotANurseError = require("../../model/exceptions/logic/userNotANurseError");
+const UserIdNotFoundError = require("../../model/exceptions/logic/userIdNotFoundError");
+const DossierNotActivatedError = require("../../model/exceptions/logic/dossierNotActivatedError");
+const DossierIdNotFoundError = require("../../model/exceptions/logic/dossierIdNotFoundError");
+const DossierNotAssociatedToUserError = require("../../model/exceptions/logic/dossierNotAssociatedToUserError");
+const DossierAlreadyAssociatedToUserError = require("../../model/exceptions/logic/dossierAlreadyAssociatedToUserError");
+const DossierAlreadyActivatedError = require("../../model/exceptions/logic/dossierAlreadyActivatedError");
 
 beforeAll(async () => {
     await app.server_starting;
@@ -309,7 +311,7 @@ describe("Activate a dossier", () => {
     });
 });
 
-describe("Activate a dossier", () => {
+describe("Generate a new dossier", () => {
     const PATH = "http://localhost:3333/dossiers";
 
     test("00 - Wrong userId", () => {
@@ -476,7 +478,7 @@ describe("Send messages", () => {
         let options = {
             method: 'POST',
             body: "messageText",
-            headers: {'Content-Type': 'text/plain', 'uid': 111}
+            headers: {'Content-Type': 'text/plain', 'uid': '111'}
         }
 
         return fetch(PATH + "1111/messages", options).then(

@@ -8,37 +8,54 @@ const router_user = require("./api/user.js");
 const router_dossier = require("./api/dossier.js");
 let router_news = require('./api/news');
 
+async function startServer(){
+    let server = await app.listen(PORT, () => {
+        console.log("CodeVsCovid app is listening at port " + PORT);
+    })
+    return server;
+}
+
+async function stopServer(server){
+    if (server != undefined)
+        server.close();
+}
+
 app.use(bodyParser.json());
 
 app.use('/users', router_user);
 app.use('/dossiers', router_dossier);
 app.use('/news', router_news);
 
-let server = app.listen(PORT, () => {
-    console.log("CodeVsCovid app is listening at port " + PORT);
-})
+startServer();
 
-let server_starting = new Promise((resolve, reject) => {
-    //If the server il already running
-    if (app.address().port == undefined)
-        resolve();
-
-    app.listen(PORT, function () {
+/*let server_starting = new Promise((resolve, reject) => {
+    app.listen(PORT, () => {
         console.log("CodeVsCovid app is listening at port " + PORT);
-        resolve();
+        resolve(server);
     });
 });
 
 let stop_server = new Promise((resolve, reject) => {
-    //If the server il already running
-    if (app.address().port == undefined)
+    server.close(() => {
         resolve();
-
-    server.close();
-});
+    });
+});*/
 
 module.exports = {
-    server: server,
-    server_starting: server_starting,
-    stop_server: stop_server
+    startServer: startServer,
+    stopServer: stopServer
 }
+
+
+// PER  DOMANI
+
+/**
+ * var express = require('express')
+var https = require('https')
+var http = require('http')
+var app = express()
+
+http.createServer(app).listen(80)
+https.createServer(options, app).listen(443)
+
+ */
