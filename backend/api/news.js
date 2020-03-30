@@ -15,7 +15,7 @@ router.get("/", async function(req, res, next){
         let countryId = req.query.countryId;
 
         if (countryId === undefined)
-            countryId = 'en';
+            countryId = 'us';
 
         if (posStart === undefined)
             posStart = 0;
