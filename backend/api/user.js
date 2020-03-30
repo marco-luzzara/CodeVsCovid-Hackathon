@@ -64,7 +64,7 @@ router.post("/login", async function(req, res){
 
 //Associate a new dossier to a user
 router.post("/dossiers", async function(req, res){
-    let uid = req.headers["User-Id"];
+    let uid = req.header("User-Id");
     let body = req.body;
 
     let requiredFields = {
@@ -81,7 +81,7 @@ router.post("/dossiers", async function(req, res){
     try {
         BodyValidator.validate(body, requiredFields);
 
-        let result = await db.associateDossierToUser(body, uid);
+        let result = await db.associateDossierToUser(body, parseInt(uid));
         let status = (result != undefined) ? 200 : 404;
         res.status(status).end();
     } catch(exc){
