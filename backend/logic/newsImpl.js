@@ -71,7 +71,7 @@ class NewsImpl {
             return countryData
                 .filter(_new => _new.sentiment_scaled >= startVal && _new.sentiment_scaled <= endVal)
                 .map(_new => ({
-                    author: _new.author,
+                    author: _new.source.name,
                     title: _new.title,
                     url: _new.url,
                     urlToImage: _new.urlToImage,

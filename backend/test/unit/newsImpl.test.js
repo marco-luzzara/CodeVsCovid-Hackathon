@@ -49,7 +49,7 @@ describe('getNewsFilteredByPositivity', () => {
         let newsImpl = new NewsImpl(NEWS_FOLDER, 3000);
         let returnedNews = [
             {
-                "author": "authorTest",
+                "author": "sourceTest",
                 "title": "titleTest",
                 "url": "urlTest",
                 "urlToImage": "urlToImageTest",
