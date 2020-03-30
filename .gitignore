@@ -1,5 +1,6 @@
 # Custom gitignore
 backend/data/
+**/.vscode/*
 
 
 # Defaults for Nodejs Project
