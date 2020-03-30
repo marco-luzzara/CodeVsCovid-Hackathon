@@ -16,7 +16,7 @@ function canBeParsedInt(n) {
 
 //Generate a new dossier
 router.post("/", async function(req, res){
-    let uid = req.headers.User-Id;
+    let uid = req.headers["User-Id"];
     if (uid == undefined || !canBeParsedInt(uid)){
         res.status(401).end();
         return;
@@ -38,7 +38,7 @@ router.post("/", async function(req, res){
 
 //Activate an existing dossier
 router.put("/:dossierId", async function(req, res){
-    let uid = req.headers.User-Id;
+    let uid = req.headers["User-Id"];
     let dossierId = req.params.dossierId;
 
     if (uid == undefined || !canBeParsedInt(uid)){
@@ -65,7 +65,7 @@ router.put("/:dossierId", async function(req, res){
 
 //Retrieve dossier info
 router.get("/:dossierId", async function(req, res){
-    let uid = req.headers.User-Id;
+    let uid = req.headers["User-Id"];
     let dossierId = req.params.dossierId;
 
     if (uid == undefined || !canBeParsedInt(uid)){
@@ -95,7 +95,7 @@ router.get("/:dossierId", async function(req, res){
 
 //Retrieve base information of all the dossiers
 router.get("/", async function(req, res){
-    let uid = req.headers.User-Id;
+    let uid = req.headers["User-Id"];
     if (uid == undefined || !canBeParsedInt(uid)){
         res.status(401).end();
         return;
@@ -116,7 +116,7 @@ router.get("/", async function(req, res){
 
 //Send a message for a specific dossier
 router.post("/:dossierId/messages", async function(req, res){
-    let uid = req.headers.User-Id;
+    let uid = req.headers["User-Id"];
     let dossierId = req.params.dossierId;
     let message = req.body;
 
