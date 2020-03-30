@@ -1,7 +1,7 @@
 export interface Parent {
     id : number;
-    name : string;
-    surname : string;
-    fiscalCode : string;
-    isNewMessage : boolean;
+    label : string;
+    //surname : string;
+    //fiscalCode : string;
+    //isNewMessage : boolean;
 }

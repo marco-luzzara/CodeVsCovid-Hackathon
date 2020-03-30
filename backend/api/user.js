@@ -1,19 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const BodyValidator = require("../utils/BodyValidator.js").BodyValidator;
-const BodyValidatorError = require("../utils/BodyValidator.js").BodyValidatorError;
-const errorHandler = require('../utils/errorHandler.js');
+const db = require('../logic/dbClientInstance');
+const BodyValidator = require("./utils/BodyValidator.js").BodyValidator;
+const BodyValidatorError = require("./utils/BodyValidator.js").BodyValidatorError;
+const errorHandler = require('./utils/errorHandler.js');
 
 const UserMailAlreadyExistsError = require("../model/exceptions/logic/userMailAlreadyExistsError.js");
 const WrongUserPasswordError = require("../model/exceptions/logic/wrongUserPasswordError.js");
 const WrongDossierPasswordError = require("../model/exceptions/logic/wrongDossierPasswordError.js");
 const DossierIdNotFoundError = require("../model/exceptions/logic/dossierIdNotFoundError.js");
 const DossierAlreadyActivatedError = require("../model/exceptions/logic/dossierAlreadyActivatedError.js");
+const UserMailNotFoundError = require("../model/exceptions/logic/userMailNotFoundError.js");
+const DossierAlreadyAssociatedToUserError = require("../model/exceptions/logic/dossierAlreadyAssociatedToUserError.js");
 
-//--------------
-const db = require('../logic/dbClientInstance');
-//--------------
-
+function canBeParsedInt(n) {
+    return Number(n) === parseInt(n);
+}
 
 //Register a new user
 router.post("/", async function(req, res, next){
@@ -51,14 +53,11 @@ router.post("/login", async function(req, res){
         BodyValidator.validate(body, requiredFields);
 
         let result = await db.getUserIdFromCredentials(body.mail, body.pwd);
-        if (result != undefined)
-            res.status(200).send(result);
-        else    
-            res.status(401).end();
+        res.status(200).send(result.toString());
     } catch (exc){
         errorHandler(res, exc, {
             "400": [BodyValidatorError],
-            "401": [WrongUserPasswordError],
+            "401": [WrongUserPasswordError, UserMailNotFoundError],
             "500": [null]
         })
     }
@@ -66,16 +65,16 @@ router.post("/login", async function(req, res){
 
 //Associate a new dossier to a user
 router.post("/dossiers", async function(req, res){
-    let uid = req.headers.uid;
+    let uid = req.header("User-Id");
     let body = req.body;
 
     let requiredFields = {
-        dossierId: "number",
-        dossierPwd: "string",
+        id: "number",
+        pwd: "string",
         patientLabel: "string"
     };
 
-    if (uid == undefined || typeof uid !== 'number'){
+    if (uid == undefined || !canBeParsedInt(uid)){
         res.status(401).end();
         return;
     }
@@ -83,15 +82,14 @@ router.post("/dossiers", async function(req, res){
     try {
         BodyValidator.validate(body, requiredFields);
 
-        let result = await db.associateDossierToUser(body, uid);
-        let status = (result != undefined) ? 200 : 404;
-        res.status(status).end();
+        let result = await db.associateDossierToUser(body, parseInt(uid));
+        res.status(200).end();
     } catch(exc){
         errorHandler(res, exc, {
             "400": [BodyValidatorError],
             "401": [WrongDossierPasswordError],
             "404": [DossierIdNotFoundError],
-            "409": [DossierAlreadyActivatedError],      //TO change maybe
+            "409": [DossierAlreadyAssociatedToUserError],
             "500": [null]
         })
     }

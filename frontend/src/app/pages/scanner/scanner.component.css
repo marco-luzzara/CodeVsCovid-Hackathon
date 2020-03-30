@@ -1,17 +1,19 @@
-.scanner-container {
-
-}
-
-.scanner {
-    width: 80%;
-    margin-left: calc(100% - 90%);
-    margin-right: calc(100% - 90%);
+:host zxing-scanner::ng-deep video {
     border: 4px;
     border-style: solid;
     border-color: red;
-}
-
-.scanner-title {
+    width: 80%;
+    height: 50vh;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 40px;
+  }
+  
+  :host zxing-scanner {
+    text-align: center;
+  }
+  
+  .scanner-title {
     margin: 10px auto;
     width: fit-content;
 }

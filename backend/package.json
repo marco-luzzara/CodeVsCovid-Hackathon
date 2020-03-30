@@ -6,8 +6,9 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production node index.js",
     "start_dev": "cross-env NODE_ENV=development node index.js",
-    "test": "cross-env NODE_ENV=development jest",
-    "testLogic": "cross-env NODE_ENV=development jest -i \"test(?!/api)/.*\""
+    "test": "cross-env NODE_ENV=development jest -i",
+    "testLogic": "cross-env NODE_ENV=development jest -i \"test(?!/api)/.*\"",
+    "testNews": "cross-env NODE_ENV=development jest -i \"test/api/news\\.test\\.js\""
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
     "config": "^3.3.1",
     "cross-env": "^7.0.2",
     "express": "^4.17.1",
+    "express-unless": "^0.5.0",
     "node-fetch": "^2.6.0"
   },
   "devDependencies": {

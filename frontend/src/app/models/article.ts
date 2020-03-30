@@ -1,7 +1,8 @@
 export interface Article {
-    title : string,
-    author : string,
-    imgUrl : string,
-    description : string,
-    url : string
+    title : string;
+    publishedAt : string;
+    urlToImage : string;
+    sentiment : number;
+    url : string;
+    author : string;
 }

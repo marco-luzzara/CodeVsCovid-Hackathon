@@ -1,5 +1,5 @@
 {
-    "endpoint": "http://localhost",
+    "host": "localhost",
     "port": 3333,
     "builderInstancePath": "mock/mockDbClientBuilderInstance",
     "builderConfig": {
@@ -7,5 +7,7 @@
         "dossiersFilePathOrJson": "./data/dossiers.json",
         "users_dossiersFilePathOrJson": "./data/users_dossiers.json",
         "messagesFilePathOrJson": "./data/messages.json"
-    }
+    },
+    "newsDataFolder": "../data",
+    "milliSecBeforeNextUpdate": 21600000
 }

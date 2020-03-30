@@ -11,4 +11,5 @@ mat-card-header > .mat-card-header-text {
     height: 50px;
     margin-left: calc(100% - 90%);
     margin-right: calc(100% - 90%);
+    margin-top: 15px;
 }
