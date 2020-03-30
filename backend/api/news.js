@@ -1,20 +1,33 @@
 const express = require('express');
 const router = express.Router();
+
 const errorHandler = require('../utils/errorHandler');
+//const NewsImpl = requ
 
-// get news
+const ModelValidationError = require('../model/exceptions/logic/modelValidationError');
+
+// GET news
 router.get("/", async function(req, res, next){
-    // let body = req.body;
-    // let requiredFields = {
-    //     mail: "string",
-    //     pwd: "string",
-    //     role: "boolean"
-    // };
-
     // try {
-    //     BodyValidator.validate(body, requiredFields);
+    //     let posStart = req.query.positivityStart;
+    //     let posEnd = req.query.positivityEnd;
+    //     let countryId = req.query.countryId;
 
-    //     let result = await db.addNewUser(body);
+    //     if (countryId === undefined)
+    //         countryId = 'en';
+
+    //     posStart = parseFloat(posStart);
+    //     if (isNaN(posStart) || posStart < 0 || posStart > 1)
+    //         throw new ModelValidationError('0 <= positivityStart <= 1');
+
+    //     posEnd = parseFloat(posEnd);
+    //     if (isNaN(posEnd) || posEnd < 0 || posEnd > 1)
+    //         throw new ModelValidationError('0 <= positivityEnd <= 1');
+
+    //     if (posStart > posEnd)
+    //         throw new ModelValidationError('positivityStart < positivityEnd');
+
+    //     let news = await db.addNewUser(body);
     //     if (result != undefined)
     //         res.status(201).send(result);
     //     else    
