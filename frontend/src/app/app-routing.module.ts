@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthService } from './services/auth/auth.service';
 
 // Pages
 import { NewsComponent } from './pages/news/news.component';
@@ -9,11 +10,12 @@ import { PatientChannelComponent } from './pages/patient-channel/patient-channel
 import { ScannerComponent } from './pages/scanner/scanner.component';
 
 const routes: Routes = [
+  { path: '', component : NewsComponent},
   { path: 'news', component : NewsComponent},
-  { path: 'parentdetail/:id', component: ParentsDetailsComponent},
-  { path: 'parentslist', component: ParentsListComponent},
-  { path: 'patient', component: PatientChannelComponent},
-  { path: 'scanner', component: ScannerComponent}
+  { path: 'parentdetail/:id', component: ParentsDetailsComponent, canActivate : [AuthService]},
+  { path: 'parentslist', component: ParentsListComponent, canActivate : [AuthService]},
+  { path: 'patient/:id', component: PatientChannelComponent, canActivate : [AuthService]},
+  { path: 'scanner', component: ScannerComponent, canActivate : [AuthService]}
 ];
 
 @NgModule({

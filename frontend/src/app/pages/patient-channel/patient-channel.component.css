@@ -11,7 +11,7 @@
 }
 
 .message-box {
-    margin: 10px;
+    margin: 5px 10px;    
     padding: 10px;
     width: fit-content;
     height: fit-content;
@@ -21,7 +21,7 @@
 }
 
 .message-text {
-    margin-right: 25px;
+    /*margin-right: 25px;*/
 }
 
 .delete-messsage-btn {
@@ -32,11 +32,21 @@
 
 .input-msg-form {
     margin-top: auto;
+    display: flex;
+    justify-content: space-around;
 }
 
 .full-width {
-    width: calc(100% - 20px);
+    width: calc(100% - 50px);
     margin-left: 10px;
-    margin-right: 10px;
+
     margin-bottom: 10px;
+}
+
+.send-messsage-btn {
+    margin: 15px;
+}
+
+.messages-list-container {
+    overflow: auto;
 }

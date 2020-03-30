@@ -5,8 +5,8 @@ const NewsImpl = require('../../logic/newsImpl');
 const CountryIdNotFoundError = require('../../model/exceptions/logic/countryIdNotFoundError');
 
 const NEWS_FOLDER = './test/resources/news';
-const IT_NEWS_FILEPATH = './test/resources/news/it.json';
-const EN_NEWS_FILEPATH = './test/resources/news/en.json';
+const IT_NEWS_FILEPATH = './test/resources/news/news_it_complete.json';
+const EN_NEWS_FILEPATH = './test/resources/news/news_en_complete.json';
 
 describe('NewsImpl creation', () => {
     test('news taken from folder, should store all news', async () => {
@@ -49,7 +49,7 @@ describe('getNewsFilteredByPositivity', () => {
         let newsImpl = new NewsImpl(NEWS_FOLDER, 3000);
         let returnedNews = [
             {
-                "author": "authorTest",
+                "author": "sourceTest",
                 "title": "titleTest",
                 "url": "urlTest",
                 "urlToImage": "urlToImageTest",

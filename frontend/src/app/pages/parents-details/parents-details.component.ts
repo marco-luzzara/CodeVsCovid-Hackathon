@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Parent } from 'src/app/models/parent';
+import { ApiService } from 'src/app/services/api/api.service';
+import { Dossier } from 'src/app/models/dossier';
 
 const MESSAGES : string[] = [
   "tutto bene",
@@ -11,10 +13,13 @@ const MESSAGES : string[] = [
 
 const PARENT : Parent = {
   id : 123,
+  label : "Mario Rossi"
+  /*
   name : "Mario",
   surname : "Rossi",
   fiscalCode : "123ABCQWERTY",
   isNewMessage : false
+  */
 }
 
 @Component({
@@ -23,14 +28,31 @@ const PARENT : Parent = {
   styleUrls: ['./parents-details.component.css']
 })
 export class ParentsDetailsComponent implements OnInit {
-  public patientId : number; 
   public messages : string[];
-  public parent : Parent;
+  public label : string;
   
-  constructor(private route: ActivatedRoute) {
-    this.patientId = +this.route.snapshot.paramMap.get('id');
-    this.messages = MESSAGES;
-    this.parent = PARENT;
+  constructor(private route: ActivatedRoute, 
+    private apiService : ApiService,
+    private router : Router) {
+
+    const dossierId = +this.route.snapshot.paramMap.get('id');
+    this.apiService.getRelatives()
+      .subscribe((relatives : Parent[]) => {
+        const found = relatives.find(r => r.id == dossierId);
+        if(found){
+          this.label = found.label;
+        }
+        else {
+          this.router.navigateByUrl('/parentslist');
+        }
+      },
+      error => this.router.navigateByUrl('/parentslist'))
+    
+    this.apiService.getDossier(dossierId)
+      .subscribe(
+        msgs => this.messages = msgs,
+        error => this.router.navigateByUrl('/parentslist')
+      );
   }
 
   ngOnInit() {

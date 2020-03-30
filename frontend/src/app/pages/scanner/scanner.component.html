@@ -1,5 +1,5 @@
 <h2 class="mat-title scanner-title">Scan patient QR code</h2>
 <h3 class="mat-subheading-2 scanner-title">You can find it on the privacy consent</h3>
-<div class="scanner-cotainer">
-    <zxing-scanner [formats]="['QR_CODE', 'EAN_13', 'CODE_128', 'DATA_MATRIX']" (scanSucess)="scanSuccess($event)" class="scanner"></zxing-scanner>
+<div class="scanner-container">
+    <zxing-scanner [enable]=true start="true" [formats]="['QR_CODE', 'EAN_13', 'CODE_128', 'DATA_MATRIX']" (scanSuccess)="scanSuccess($event)" class="scanner"></zxing-scanner>
 </div>

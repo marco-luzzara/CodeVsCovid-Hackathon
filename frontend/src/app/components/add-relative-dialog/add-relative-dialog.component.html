@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Insert the dossier credentials</h1>
+<div mat-dialog-content>
+    <mat-form-field>
+        <mat-label>Dossier Id</mat-label>
+        <input type="number" matInput [(ngModel)]="data.id">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input type="text" matInput [(ngModel)]="data.password">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Patient Name and Surname</mat-label>
+        <input type="text" matInput [(ngModel)]="data.label">
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Close</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Submit</button>
+</div>

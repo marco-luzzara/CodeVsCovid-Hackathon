@@ -43,7 +43,7 @@ describe('getNewsFilteredByPositivity', () => {
     test('countryId undefined, should call function with default countryId', async () => {
         const POS_START = 0.2;
         const POS_END = 0.6;
-        const DEFAULT_COUNTRYID = 'en';
+        const DEFAULT_COUNTRYID = 'us';
         let mockFn = mockFunctionImplementationOnce(newsImplInstance.getNewsFilteredByPositivity, () => {});
 
         let res = await genericCallApi(`?positivityStart=${POS_START}&positivityEnd=${POS_END}`);

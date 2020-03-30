@@ -4,22 +4,21 @@
     <mat-icon>arrow_back</mat-icon>
   </button>
   <span>{{title}}</span>
+  <span class="spacer"></span>
+  <button *ngIf="isLoggedIn == false" mat-button (click)="openLoginDialog()">Login</button>
+  <button *ngIf="isLoggedIn == false" mat-button (click)="openRegisterDialog()">Register</button>
 </mat-toolbar>
 
 <router-outlet></router-outlet>
 
 <nav mat-tab-nav-bar [color]="'primary'" [backgroundColor]="'primary'" class="navbar">
-  <a mat-tab-link *ngIf="isLoggedIn" routerLink="/news" routerLinkActive #rla="routerLinkActive"
+  <a mat-tab-link routerLink="/news" routerLinkActive #rla="routerLinkActive"
     [active]="rla.isActive">
     News
   </a>
   <a mat-tab-link *ngIf="isLoggedIn" routerLink="/parentslist" routerLinkActive #rla="routerLinkActive"
     [active]="rla.isActive">
     Parents list
-  </a>
-  <a mat-tab-link *ngIf="isNurse" routerLink="/patient" routerLinkActive #rla="routerLinkActive"
-    [active]="rla.isActive">
-    Patient
   </a>
   <a mat-tab-link *ngIf="isNurse" routerLink="/scanner" routerLinkActive #rla="routerLinkActive"
     [active]="rla.isActive">

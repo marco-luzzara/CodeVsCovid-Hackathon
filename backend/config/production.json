@@ -8,6 +8,6 @@
         "users_dossiersFilePathOrJson": [],
         "messagesFilePathOrJson": []
     },
-    "newsDataFolder": "./test/resources/news",
+    "newsDataFolder": "../data",
     "milliSecBeforeNextUpdate": 21600000
 }
