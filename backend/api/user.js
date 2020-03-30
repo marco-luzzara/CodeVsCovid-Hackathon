@@ -64,7 +64,7 @@ router.post("/login", async function(req, res){
 
 //Associate a new dossier to a user
 router.post("/dossiers", async function(req, res){
-    let uid = req.headers.uid;
+    let uid = req.headers.User-Id;
     let body = req.body;
 
     let requiredFields = {
