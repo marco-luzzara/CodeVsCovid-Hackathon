@@ -7,7 +7,7 @@ const ASSOCIATE_DOSSIER_URL = "http://localhost:3333/users/dossiers";
 
 const testUsers = "./test/resources/testUsers.json";
 const db = require("../../logic/dbClientInstance.js");
-const app = require("../../index.js");
+const app = require("../../index");
 
 // exceptions
 const WrongUserPasswordError = require("../../model/exceptions/logic/wrongUserPasswordError");
@@ -22,19 +22,16 @@ const DossierNotAssociatedToUserError = require("../../model/exceptions/logic/do
 const DossierAlreadyAssociatedToUserError = require("../../model/exceptions/logic/dossierAlreadyAssociatedToUserError");
 const DossierAlreadyActivatedError = require("../../model/exceptions/logic/dossierAlreadyActivatedError");
 
-var server = undefined;
-
 beforeAll(async () => {
-    server = await app.startServer();
+    await app.server_starting;
 });
 
 beforeEach(() => {
     jest.resetAllMocks();
 });
 
-afterAll(async () => {
-    await app.stopServer(server);
-    server = undefined;
+afterAll(() => {
+    app.server.close();
 });
 
 function mockManagerFunction(mockFun, behaviour) {
@@ -240,9 +237,11 @@ describe("User login", () => {
     });
 
     test("06 - User not recognized - wrong mail and password", () => {
+        mockManagerFunction(db.getUserIdFromCredentials, UserMailNotFoundError);
+
         let options = {
             method: 'POST',
-            body: JSON.stringify({mail: testUsers[0].mail + "abc", pwd: testUsers[0].pwd + "abc"}),
+            body: JSON.stringify({mail: "abc", pwd: "abc"}),
             headers: {'Content-Type': 'application/json'}
         }
 

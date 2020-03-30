@@ -11,19 +11,8 @@ const router_user = require("./api/user.js");
 const router_dossier = require("./api/dossier.js");
 let router_news = require('./api/news');
 
-async function startServer(){
-    let server = await app.listen(PORT, () => {
-        console.log("CodeVsCovid app is listening at port " + PORT);
-    })
-    return server;
-}
-
-async function stopServer(server){
-    if (server != undefined)
-        server.close();
-}
-
 app.use(bodyParser.json());
+app.use(bodyParser.text());
 
 app.use('/users', router_user);
 app.use('/dossiers', router_dossier);

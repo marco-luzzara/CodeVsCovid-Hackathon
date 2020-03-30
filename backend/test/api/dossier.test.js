@@ -2,7 +2,7 @@ jest.mock("../../logic/dbClientInstance.js");
 
 const fetch = require('node-fetch');
 const db = require("../../logic/dbClientInstance.js");
-const app = require("../../index.js");
+const app = require("../../index");
 
 // exceptions
 const WrongUserPasswordError = require("../../model/exceptions/logic/wrongUserPasswordError");
@@ -25,8 +25,8 @@ beforeEach(() => {
     jest.resetAllMocks();
 });
 
-afterAll(async () => {
-    await app.stop_server;
+afterAll(() => {
+    app.server.close();
 });
 
 function mockManagerFunction(mockFun, behaviour) {
@@ -66,7 +66,7 @@ describe("Get all messages for a dossier", () => {
         )
     });
 
-    test("03 - Wrong dossierId", () => {
+    test("02 - Wrong dossierId", () => {
         let options = {
             method: 'GET',
             headers: {'uid': 111}
@@ -87,7 +87,7 @@ describe("Get all messages for a dossier", () => {
 
         return fetch(PATH, options).then(
             res => {
-                expect(res.status).toBe(400);
+                expect(res.status).toBe(404); //API do not exists
             }
         )
     });
@@ -97,7 +97,7 @@ describe("Get all messages for a dossier", () => {
 
         let options = {
             method: 'GET',
-            headers: {'uid': 111}
+            headers: {'uid': '111'}
         }
 
         return fetch(PATH + 222, options).then(
@@ -127,12 +127,12 @@ describe("Get all messages for a dossier", () => {
 
         let options = {
             method: 'GET',
-            headers: {'uid': 111}
+            headers: {'uid': '111'}
         }
 
         return fetch(PATH + 222, options).then(
             res => {
-                expect(res.status).toBe(403);
+                expect(res.status).toBe(404);
             }
         )
     });
@@ -227,12 +227,12 @@ describe("Activate a dossier", () => {
     test("02 - Missing dossierId", () => {
         let options = {
             method: 'PUT',
-            headers: {'uid': 111}
+            headers: {'uid': '111'}
         }
 
         return fetch(PATH, options).then(
             res => {
-                expect(res.status).toBe(400);
+                expect(res.status).toBe(404);   //Api do not exists
             }
         )
     });
@@ -240,12 +240,12 @@ describe("Activate a dossier", () => {
     test("03 - Wrong dossierId", () => {
         let options = {
             method: 'PUT',
-            headers: {'uid': 111}
+            headers: {'uid': '111'}
         }
 
         return fetch(PATH + "hello", options).then(
             res => {
-                expect(res.status).toBe(401);
+                expect(res.status).toBe(400);
             }
         )
     });
@@ -437,7 +437,7 @@ describe("Send messages", () => {
 
         return fetch(PATH + "/messages", options).then(
             res => {
-                expect(res.status).toBe(400);
+                expect(res.status).toBe(404);   //API do not exists
             }
         )
     });
@@ -462,10 +462,10 @@ describe("Send messages", () => {
         let options = {
             method: 'POST',
             body: "messageText",
-            headers: {'Content-Type': 'text/plain', 'uid': 111}
+            headers: {'Content-Type': 'text/plain', 'uid': '111'}
         }
 
-        return fetch(PATH + "aaa/messages", options).then(
+        return fetch(PATH + "111/messages", options).then(
             res => {
                 expect(res.status).toBe(401);
             }
@@ -489,12 +489,12 @@ describe("Send messages", () => {
     });
 
     test("08 - Dossier not activated yet", () => {
-        mockManagerFunction(db.sendMessageToDossier, UserNotANurseError);
+        mockManagerFunction(db.sendMessageToDossier, DossierNotActivatedError);
 
         let options = {
             method: 'POST',
             body: "messageText",
-            headers: {'Content-Type': 'text/plain', 'uid': 111}
+            headers: {'Content-Type': 'text/plain', 'uid': '111'}
         }
 
         return fetch(PATH + "111/messages", options).then(

@@ -37,15 +37,15 @@ router.post("/", async function(req, res){
 });
 
 //Activate an existing dossier
-router.put("/", async function(req, res){
+router.put("/:dossierId", async function(req, res){
     let uid = req.headers.uid;
-    let dossierId = req.query.dossierId;
+    let dossierId = req.params.dossierId;
 
     if (uid == undefined || !canBeParsedInt(uid)){
         res.status(401).end();
         return;
     }
-    if (dossierId == undefined || typeof dossierId !== 'number'){
+    if (dossierId == undefined || !canBeParsedInt(dossierId)){
         res.status(400).end();
         return;
     }
@@ -72,7 +72,7 @@ router.get("/:dossierId", async function(req, res){
         res.status(401).end();
         return;
     }
-    if (dossierId == undefined || typeof dossierId !== 'number'){
+    if (dossierId == undefined || !canBeParsedInt(dossierId)){
         res.status(400).end();
         return;
     }
@@ -124,7 +124,7 @@ router.post("/:dossierId/messages", async function(req, res){
         res.status(401).end();
         return;
     }
-    if (dossierId == undefined || typeof dossierId !== 'number'){
+    if (dossierId == undefined || !canBeParsedInt(dossierId)){
         res.status(400).end();
         return;
     }
@@ -135,8 +135,7 @@ router.post("/:dossierId/messages", async function(req, res){
 
     try {
         let result = await db.sendMessageToDossier(dossierId, uid, message);
-        let status = (result != undefined) ? 201 : 404;
-        res.status(status).end();
+        res.status(200).end();
     } catch (exc){
         errorHandler(res, exc, {
             "401": [UserNotANurseError],
