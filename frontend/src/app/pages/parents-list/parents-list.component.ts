@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddRelativeDialogComponent } from 'src/app/components/add-relative-dialog/add-relative-dialog.component';
 import { ApiService } from 'src/app/services/api/api.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-parents-list',
@@ -16,7 +17,8 @@ export class ParentsListComponent implements OnInit {
 
   constructor( public dialog : MatDialog, 
     private apiService : ApiService,
-    private router : Router) {
+    private router : Router,
+    private _snackBar: MatSnackBar) {
       this.apiService.getRelatives().subscribe(parents => {
         console.log(parents);
         this.parents = parents
@@ -38,10 +40,12 @@ export class ParentsListComponent implements OnInit {
       this.apiService.addDossierToUser(result.id, result.password, result.patientlabel)
         .subscribe(response => {
           if(response.status == 200){
+            this.openSnackBar(`Dossier ${result.id} added to waiting list`);
             console.log(`Dossier ${result.id} added to waiting list`)
           }
         }, error => {
           if(error.status == 409){
+            this.openSnackBar(`Dossier ${result.id} is waiting activation`);
             console.log(`Dossier ${result.id} is waiting activation`)
           }
           else {
@@ -51,4 +55,9 @@ export class ParentsListComponent implements OnInit {
     });
   }
 
+  public openSnackBar(message: string) {
+    this._snackBar.open(message, null, {
+      duration: 2000
+    });
+  }
 }

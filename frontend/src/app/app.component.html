@@ -1,5 +1,5 @@
 <mat-toolbar [color]="'primary'">
-  <button *ngIf="location.isCurrentPathEqualTo('/patient') || location.path().includes('/parentdetail/')"
+  <button *ngIf="location.isCurrentPathEqualTo('/patient') || location.path().includes('/relativedetail/')"
     mat-icon-button (click)="goBack()">
     <mat-icon>arrow_back</mat-icon>
   </button>
@@ -13,23 +13,23 @@
 <router-outlet></router-outlet>
 
 <nav mat-tab-nav-bar [color]="'primary'" [backgroundColor]="'primary'" class="navbar">
-  <a mat-tab-link routerLink="/news" routerLinkActive #rla="routerLinkActive"
-    [active]="rla.isActive">
+  <a mat-tab-link routerLink="/news"
+    [active]="location.path() == '/news' || location.path() == ''">
     News
   </a>
 
-  <a mat-tab-link *ngIf="isLoggedIn" routerLink="/parentslist" routerLinkActive #rla="routerLinkActive"
-    [active]="rla.isActive">
-    Parents list
+  <a mat-tab-link *ngIf="isLoggedIn" routerLink="/relatives"
+    [active]="location.path() == '/relatives'">
+    Relatives
   </a>
 
-  <a mat-tab-link routerLink="/covidfaq" routerLinkActive #rla="routerLinkActive"
-  [active]="rla.isActive">
+  <a mat-tab-link routerLink="/covidfaq" 
+  [active]="location.path() == '/covidfaq'">
   Faq
   </a>
 
-  <a mat-tab-link *ngIf="isNurse" routerLink="/scanner" routerLinkActive #rla="routerLinkActive"
-    [active]="rla.isActive">
+  <a mat-tab-link *ngIf="isNurse" routerLink="/scanner"
+    [active]="location.path() == '/scanner'">
     Scanner
   </a>
 </nav>

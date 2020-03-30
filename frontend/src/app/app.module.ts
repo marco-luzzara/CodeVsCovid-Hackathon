@@ -25,6 +25,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatRippleModule} from '@angular/material/core';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSliderModule} from '@angular/material/slider';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatChipsModule} from '@angular/material/chips';
 
 //QR scanner
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
@@ -47,7 +49,9 @@ const MATERIAL_MODULES = [
   MatFormFieldModule,
   MatRippleModule,
   MatDialogModule,
-  MatSliderModule
+  MatSliderModule,
+  MatSnackBarModule,
+  MatChipsModule
 ]
 
 @NgModule({

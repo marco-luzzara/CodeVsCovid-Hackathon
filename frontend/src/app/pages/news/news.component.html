@@ -1,7 +1,7 @@
 <mat-card class="counters-container">
     <div *ngFor="let counter of counters">
         <p class="counter-title">{{counter.title}}</p>
-        <div class="counter-value">{{counter.value | shortNumber}}</div>
+        <h2 class="counter-value mat-title">{{counter.value | shortNumber}}</h2>
     </div>
 </mat-card>
 <div class="news-list-container">

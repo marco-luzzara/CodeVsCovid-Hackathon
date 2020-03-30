@@ -22,6 +22,12 @@ const PARENT : Parent = {
   */
 }
 
+const TIPS_MESSAGES : string[] = [
+  "Patient is doing progresses",
+  "Patient is going worse",
+  "Patient is cured"
+]
+
 @Component({
   selector: 'app-patient-channel',
   templateUrl: './patient-channel.component.html',
@@ -32,13 +38,18 @@ export class PatientChannelComponent implements OnInit {
   public newMessage : string;
   public patientLabel : string;
   private dossierId : number;
+  public tipsMessages : string[];
+  private scrolled : boolean;
+  private messageList : HTMLElement;
 
   constructor(private route: ActivatedRoute, 
     private apiService : ApiService,
     private router : Router) {
-
+    
     const dossierId = +this.route.snapshot.paramMap.get('id');
     this.dossierId = dossierId;
+    this.tipsMessages = TIPS_MESSAGES;
+    this.scrolled = false;
 
     this.apiService.getRelatives()
       .subscribe((relatives : Parent[]) => {
@@ -63,21 +74,29 @@ export class PatientChannelComponent implements OnInit {
   }
   
   ngOnInit() {
+    this.messageList = document.getElementById('messageList')
+    
+    setTimeout(this.updateScroll,100,this.messageList)
   }
 
-  sendMessage() {
-    console.log(this.newMessage);
-    this.apiService.sendMessage(this.dossierId, this.newMessage).subscribe(resp => {
+  private updateScroll(messageList : HTMLElement){
+        messageList.scrollTop = messageList.scrollHeight;
+  }
+
+
+  sendMessage(message) {
+    const msgToSend = message || this.newMessage;
+
+    this.apiService.sendMessage(this.dossierId, msgToSend).subscribe(resp => {
       if(resp.status == 200){
         this.messages.push({
           dossierId : "" + this.dossierId,
-          message : this.newMessage,
+          message : msgToSend,
           timestamp : new Date().toUTCString(),
           userId : null
         });
       }
       this.newMessage = "";
     })
-  
   }
 }

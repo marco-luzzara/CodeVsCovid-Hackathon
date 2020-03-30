@@ -42,7 +42,7 @@ export class AppComponent {
         .subscribe(user => {
           console.log(user);
           localStorage.setItem("token",JSON.stringify({'id': user.id, 'isNurse' : user.isNurse}));
-          //window.location.reload();
+          window.location.reload();
         })
     });
   }
@@ -51,7 +51,7 @@ export class AppComponent {
   public openRegisterDialog(): void {
     const dialogRef = this.dialog.open(RegisterDialogComponent, {
       width: '250px',
-      data : {email : "", password : "", passwordCheck : "", role : true}
+      data : {email : "", password : "", passwordCheck : "", role : false}
     });
 
     dialogRef.afterClosed().subscribe(result => {

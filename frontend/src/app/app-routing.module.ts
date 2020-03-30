@@ -14,8 +14,8 @@ const routes: Routes = [
   { path: '', component : NewsComponent},
   { path: 'news', component : NewsComponent},
   { path: 'covidfaq', component : FaqComponent},
-  { path: 'parentdetail/:id', component: ParentsDetailsComponent, canActivate : [AuthService]},
-  { path: 'parentslist', component: ParentsListComponent, canActivate : [AuthService]},
+  { path: 'relativedetail/:id', component: ParentsDetailsComponent, canActivate : [AuthService]},
+  { path: 'relatives', component: ParentsListComponent, canActivate : [AuthService]},
   { path: 'patient/:id', component: PatientChannelComponent, canActivate : [AuthService]},
   { path: 'scanner', component: ScannerComponent, canActivate : [AuthService]}
 ];

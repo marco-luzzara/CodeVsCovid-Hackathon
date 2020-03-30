@@ -36,11 +36,23 @@
     justify-content: space-around;
 }
 
+.send-message-section {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+}
+
 .full-width {
     width: calc(100% - 50px);
     margin-left: 10px;
 
     margin-bottom: 10px;
+}
+
+.tips {
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .send-messsage-btn {
