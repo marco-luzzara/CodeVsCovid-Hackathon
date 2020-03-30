@@ -68,8 +68,8 @@ router.post("/dossiers", async function(req, res){
     let body = req.body;
 
     let requiredFields = {
-        dossierId: "number",
-        dossierPwd: "string",
+        id: "number",
+        pwd: "string",
         patientLabel: "string"
     };
 
