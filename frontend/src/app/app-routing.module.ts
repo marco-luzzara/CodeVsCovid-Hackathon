@@ -8,10 +8,12 @@ import { ParentsDetailsComponent } from './pages/parents-details/parents-details
 import { ParentsListComponent } from './pages/parents-list/parents-list.component';
 import { PatientChannelComponent } from './pages/patient-channel/patient-channel.component';
 import { ScannerComponent } from './pages/scanner/scanner.component';
+import { FaqComponent } from './pages/faq/faq.component';
 
 const routes: Routes = [
   { path: '', component : NewsComponent},
   { path: 'news', component : NewsComponent},
+  { path: 'covidfaq', component : FaqComponent},
   { path: 'parentdetail/:id', component: ParentsDetailsComponent, canActivate : [AuthService]},
   { path: 'parentslist', component: ParentsListComponent, canActivate : [AuthService]},
   { path: 'patient/:id', component: PatientChannelComponent, canActivate : [AuthService]},

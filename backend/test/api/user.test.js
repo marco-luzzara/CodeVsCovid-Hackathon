@@ -273,8 +273,8 @@ describe("Dossier association to a user", () => {
     test("00 - User ID not valid", () => {
         let options = {
             method: 'POST',
-            body: JSON.stringify({dossierId: 111, dossierPwd: "pwd", patientLabel: "label"}),
-            headers: {'Content-Type': 'application/json', 'uid': 'hello'}
+            body: JSON.stringify({id: 111, pwd: "pwd", patientLabel: "label"}),
+            headers: {'Content-Type': 'application/json', 'User-Id': 'hello'}
         }
 
         return fetch(ASSOCIATE_DOSSIER_URL, options).then(
@@ -284,10 +284,10 @@ describe("Dossier association to a user", () => {
         )
     });
 
-    test("01 - Missing uid", () => {
+    test("01 - Missing User-Id", () => {
         let options = {
             method: 'POST',
-            body: JSON.stringify({dossierId: 111, dossierPwd: "pwd", patientLabel: "label"}),
+            body: JSON.stringify({id: 111, pwd: "pwd", patientLabel: "label"}),
             headers: {'Content-Type': 'application/json'}
         }
 
@@ -301,8 +301,8 @@ describe("Dossier association to a user", () => {
     test("02 - Wrong dossierId", () => {
         let options = {
             method: 'POST',
-            body: JSON.stringify({dossierId: "hello", dossierPwd: "pwd", patientLabel: "label"}),
-            headers: {'Content-Type': 'application/json', 'uid': '111'}
+            body: JSON.stringify({id: "hello", pwd: "pwd", patientLabel: "label"}),
+            headers: {'Content-Type': 'application/json', 'User-Id': '111'}
         }
 
         return fetch(ASSOCIATE_DOSSIER_URL, options).then(
@@ -315,8 +315,8 @@ describe("Dossier association to a user", () => {
     test("03 - Missing dossierId", () => {
         let options = {
             method: 'POST',
-            body: JSON.stringify({dossierPwd: "pwd", patientLabel: "label"}),
-            headers: {'Content-Type': 'application/json', 'uid': 111}
+            body: JSON.stringify({pwd: "pwd", patientLabel: "label"}),
+            headers: {'Content-Type': 'application/json', 'User-Id': 111}
         }
 
         return fetch(ASSOCIATE_DOSSIER_URL, options).then(
@@ -329,8 +329,8 @@ describe("Dossier association to a user", () => {
     test("04 - Wrong dossierPwd", () => {
         let options = {
             method: 'POST',
-            body: JSON.stringify({dossierId: 111, dossierPwd: [], patientLabel: "label"}),
-            headers: {'Content-Type': 'application/json', 'uid': 111}
+            body: JSON.stringify({id: 111, pwd: [], patientLabel: "label"}),
+            headers: {'Content-Type': 'application/json', 'User-Id': 111}
         }
 
         return fetch(ASSOCIATE_DOSSIER_URL, options).then(
@@ -343,8 +343,8 @@ describe("Dossier association to a user", () => {
     test("05 - Missing dossierPwd", () => {
         let options = {
             method: 'POST',
-            body: JSON.stringify({dossierId: 111, patientLabel: "label"}),
-            headers: {'Content-Type': 'application/json', 'uid': 111}
+            body: JSON.stringify({id: 111, patientLabel: "label"}),
+            headers: {'Content-Type': 'application/json', 'User-Id': 111}
         }
 
         return fetch(ASSOCIATE_DOSSIER_URL, options).then(
@@ -357,8 +357,8 @@ describe("Dossier association to a user", () => {
     test("06 - Wrong patient label", () => {
         let options = {
             method: 'POST',
-            body: JSON.stringify({dossierId: 111, dossierPwd: "pwd", patientLabel: []}),
-            headers: {'Content-Type': 'application/json', 'uid': 111}
+            body: JSON.stringify({id: 111, pwd: "pwd", patientLabel: []}),
+            headers: {'Content-Type': 'application/json', 'User-Id': 111}
         }
 
         return fetch(ASSOCIATE_DOSSIER_URL, options).then(
@@ -371,8 +371,8 @@ describe("Dossier association to a user", () => {
     test("07 - Missing patient label", () => {
         let options = {
             method: 'POST',
-            body: JSON.stringify({dossierId: 111, dossierPwd: "pwd"}),
-            headers: {'Content-Type': 'application/json', 'uid': 111}
+            body: JSON.stringify({id: 111, pwd: "pwd"}),
+            headers: {'Content-Type': 'application/json', 'User-Id': 111}
         }
 
         return fetch(ASSOCIATE_DOSSIER_URL, options).then(
@@ -387,8 +387,8 @@ describe("Dossier association to a user", () => {
 
         let options = {
             method: 'POST',
-            body: JSON.stringify({dossierId: 111, dossierPwd: "pwd", patientLabel: "label"}),
-            headers: {'Content-Type': 'application/json', 'uid': 111}
+            body: JSON.stringify({id: 111, pwd: "pwd", patientLabel: "label"}),
+            headers: {'Content-Type': 'application/json', 'User-Id': '111'}
         }
 
         return fetch(ASSOCIATE_DOSSIER_URL, options).then(
@@ -403,8 +403,8 @@ describe("Dossier association to a user", () => {
 
         let options = {
             method: 'POST',
-            body: JSON.stringify({dossierId: 111, dossierPwd: "pwd", patientLabel: "label"}),
-            headers: {'Content-Type': 'application/json', 'uid': 111}
+            body: JSON.stringify({id: 111, pwd: "pwd", patientLabel: "label"}),
+            headers: {'Content-Type': 'application/json', 'User-Id': 111}
         }
 
         return fetch(ASSOCIATE_DOSSIER_URL, options).then(
@@ -419,8 +419,8 @@ describe("Dossier association to a user", () => {
 
         let options = {
             method: 'POST',
-            body: JSON.stringify({dossierId: 111, dossierPwd: "pwd", patientLabel: "label"}),
-            headers: {'Content-Type': 'application/json', 'uid': 111}
+            body: JSON.stringify({id: 111, pwd: "pwd", patientLabel: "label"}),
+            headers: {'Content-Type': 'application/json', 'User-Id': 111}
         }
 
         return fetch(ASSOCIATE_DOSSIER_URL, options).then(
@@ -435,8 +435,8 @@ describe("Dossier association to a user", () => {
 
         let options = {
             method: 'POST',
-            body: JSON.stringify({dossierId: 111, dossierPwd: "pwd", patientLabel: "label"}),
-            headers: {'Content-Type': 'application/json', 'uid': 111}
+            body: JSON.stringify({id: 111, pwd: "pwd", patientLabel: "label"}),
+            headers: {'Content-Type': 'application/json', 'User-Id': 111}
         }
 
         return fetch(ASSOCIATE_DOSSIER_URL, options).then(

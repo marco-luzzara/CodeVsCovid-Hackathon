@@ -4,6 +4,7 @@ import { of, Observable, ArgumentOutOfRangeError } from 'rxjs';
 import { Dossier } from 'src/app/models/dossier';
 import { Parent } from 'src/app/models/parent';
 import { Article } from 'src/app/models/article';
+import { Message } from '../../models/message';
 
 const apiEndpoint = "http://localhost:3333"
 
@@ -12,14 +13,21 @@ const httpOptions = {
     'Content-Type':  'application/json'
   })
 };
+
+const httpOptionsPlainText = {
+  headers: new HttpHeaders({
+    'Content-Type':  'text/plain'
+  })
+};
+
 const RELATIVES : Parent[] = [
   {
     id: 123,
-    label : "Mario Rossi"
+    patientLabel : "Mario Rossi"
   },
   {
     id : 456,
-    label : "Luca Verdi"
+    patientLabel : "Luca Verdi"
   }
 ]
 
@@ -34,6 +42,10 @@ const ARTICLES : Article[] = [
   }
 ]
 
+export interface EncapsMessage {
+  messages : Message[]
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -42,24 +54,23 @@ export class ApiService {
   constructor(private http : HttpClient) { }
 
   public registerUser(mail : string, password : string, role : boolean) : Observable<number>{
-    this.http.post<number>(`${apiEndpoint}/users`, {mail, password, role}, httpOptions)
-    return of(123)
+    return this.http.post<number>(`${apiEndpoint}/users`, {'mail' : mail, 'pwd' : password, 'role' : role}, httpOptions)
+    
   }
 
   public login(mail : string, password : string) : Observable<any>{
-    this.http.post<number>(`${apiEndpoint}/users/login`, {mail, password}, httpOptions)
-    return of(123)
+    return this.http.post<any>(`${apiEndpoint}/users/login`, {'mail' : mail, 'pwd' : password}, httpOptions)
   }
 
   public addDossierToUser(dossierId, dossierPassword, patientLabel) {
+    console.log(dossierId, dossierPassword, patientLabel);
     return this.http.post<HttpResponse<any>>(`${apiEndpoint}/users/dossiers`, {
-      dossierId, dossierPassword, patientLabel
+      id : dossierId, pwd : dossierPassword, patientLabel : patientLabel
     }, { observe : 'response', headers : httpOptions.headers})
   }
 
   public getDossier(id : number){
-    this.http.get(`${apiEndpoint}/dossiers/${id}`, httpOptions)
-    return of(["ciao", "gino", "pino"])
+    return this.http.get<EncapsMessage>(`${apiEndpoint}/dossiers/${id}`, httpOptions)
   }
 
   public activateDossier(id : number) {
@@ -74,7 +85,7 @@ export class ApiService {
 
   public sendMessage(id, message) {
     return this.http.post<HttpResponse<any>>(`${apiEndpoint}/dossiers/${id}/messages`, message,
-     { observe : 'response', headers : httpOptions.headers})
+     { observe : 'response', headers : httpOptionsPlainText.headers})
   }
 
   public getNews(sentimentValue) {

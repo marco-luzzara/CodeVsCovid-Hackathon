@@ -18,6 +18,7 @@ export class ParentsListComponent implements OnInit {
     private apiService : ApiService,
     private router : Router) {
       this.apiService.getRelatives().subscribe(parents => {
+        console.log(parents);
         this.parents = parents
       })
     }
@@ -29,21 +30,24 @@ export class ParentsListComponent implements OnInit {
   public addNewRelative(): void {
     const dialogRef = this.dialog.open(AddRelativeDialogComponent, {
       width: '250px',
-      data : {id : null, password : "", label : ""}
+      data : {id : null, password : "", patientlabel : ""}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      console.log(result);
-      this.apiService.addDossierToUser(result.id, result.password, result.label)
+      this.apiService.addDossierToUser(result.id, result.password, result.patientlabel)
         .subscribe(response => {
           if(response.status == 200){
-            this.parents.push({id : result.id, label : result.label})
+            console.log(`Dossier ${result.id} added to waiting list`)
           }
-          if(response.status == 409){
+        }, error => {
+          if(error.status == 409){
             console.log(`Dossier ${result.id} is waiting activation`)
           }
-        }, error => console.log(error))
+          else {
+            console.log(error)
+          }
+        })
     });
   }
 
