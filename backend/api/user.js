@@ -11,7 +11,7 @@ const DossierIdNotFoundError = require("../model/exceptions/logic/dossierIdNotFo
 const DossierAlreadyActivatedError = require("../model/exceptions/logic/dossierAlreadyActivatedError.js");
 
 //--------------
-const db = require('');
+const db = require('../logic/dbClientInstance');
 //--------------
 
 
@@ -27,11 +27,9 @@ router.post("/", async function(req, res, next){
     try {
         BodyValidator.validate(body, requiredFields);
 
-        let result = await db.addNewUser(body);
-        if (result != undefined)
-            res.status(201).send(result);
-        else    
-            res.status(500).json({message: "Cannot create a new user"});
+        let userObj = await db.addNewUser(body);
+        
+        res.status(201).json(userObj);
     } catch (exc) {
         errorHandler(res, exc, {
             "400": [BodyValidatorError],

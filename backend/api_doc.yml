@@ -39,9 +39,9 @@ paths:
         '200':
           description: returns the correspondent user id
           content:
-            text/plain:
+            application/json:
               schema:
-                type: integer
+                $ref: '#/components/schemas/LoginResponse'
         '401':
           description: Invalid user credentials
           
@@ -164,9 +164,53 @@ paths:
           description: dossier id specified does not exist
         '401':
           description: user with specified User-Id cannot access to this dossier (only nurse can).
+          
+  /news:
+    get:
+      summary: get last news with the possibility of choosing how good they must be.
+      description: every 6 hours news are updated and you will see those with the positivity level specified in the range from positivityStart to positivityEnd
+      parameters: 
+        - in: query
+          name: countryId
+          description: country id in ISO 3166 format
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: positivityStart
+          description: minimum level of positivity of a requested new (from 0 to 1)
+          required: false
+          schema:
+            type: number
+        - in: query
+          name: positivityEnd
+          description: maximum level of positivity of a requested new (from 0 to 1)
+          required: false
+          schema:
+            type: number
+          
+      responses:
+        '200':
+          description: array of news
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetNewsResponse'
+        '400':
+          description: parameters undefined or malformed
+        '404':
+          description: countryId not found
                   
 components:
   schemas:
+    LoginResponse:
+      type: object
+      properties:
+        id: 
+          type: integer
+        isNurse:
+          type: boolean
+  
     DossierCreationResponse:
       type: object
       properties:
@@ -221,6 +265,24 @@ components:
           type: string
         pwd:
           type: string
+          
+    GetNewsResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          title:
+            type: string
+          url:
+            type: string
+          urlToImage:
+            type: string
+          publishedAt:
+            type: string
+          author:
+            type: string
+          sentiment:
+            type: number
               
           
   parameters:

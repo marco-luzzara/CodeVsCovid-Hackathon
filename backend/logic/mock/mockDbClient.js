@@ -63,7 +63,7 @@ class MockDbClient extends DbClient {
             if (user.pwd !== pwd)
                 throw new WrongUserPasswordError();
 
-            return user.id;
+            return (({id, isNurse}) => ({id, isNurse}))(user);
         });
     }
 
