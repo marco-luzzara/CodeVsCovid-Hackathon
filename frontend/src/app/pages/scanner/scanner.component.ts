@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api/api.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-scanner',
@@ -17,7 +18,10 @@ export class ScannerComponent {
       if(resp.status == 200 || resp.status == 409){
         this.router.navigateByUrl(`/patient/${output}`);
       }
-    }, error => console.log(error))
+    }, (error : HttpErrorResponse) => {
+      if(error.status == 409 )
+        this.router.navigateByUrl(`/patient/${output}`);
+    })
  
   }
 }

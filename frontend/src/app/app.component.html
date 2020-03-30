@@ -3,6 +3,7 @@
     mat-icon-button (click)="goBack()">
     <mat-icon>arrow_back</mat-icon>
   </button>
+  <img src="../assets/logo.svg" style="margin: 10px; height: 44px"/>
   <span>{{title}}</span>
   <span class="spacer"></span>
   <button *ngIf="isLoggedIn == false" mat-button (click)="openLoginDialog()">Login</button>
@@ -16,10 +17,17 @@
     [active]="rla.isActive">
     News
   </a>
+
   <a mat-tab-link *ngIf="isLoggedIn" routerLink="/parentslist" routerLinkActive #rla="routerLinkActive"
     [active]="rla.isActive">
     Parents list
   </a>
+
+  <a mat-tab-link routerLink="/covidfaq" routerLinkActive #rla="routerLinkActive"
+  [active]="rla.isActive">
+  Faq
+  </a>
+
   <a mat-tab-link *ngIf="isNurse" routerLink="/scanner" routerLinkActive #rla="routerLinkActive"
     [active]="rla.isActive">
     Scanner

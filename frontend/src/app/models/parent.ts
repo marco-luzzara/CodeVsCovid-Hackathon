@@ -1,6 +1,6 @@
 export interface Parent {
     id : number;
-    label : string;
+    patientLabel : string;
     //surname : string;
     //fiscalCode : string;
     //isNewMessage : boolean;

@@ -33,7 +33,8 @@ import { LoginDialogComponent } from './components/login-dialog/login-dialog.com
 import { RegisterDialogComponent } from './components/register-dialog/register-dialog.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './services/auth/token.interceptor';
-import { AddRelativeDialogComponent } from './components/add-relative-dialog/add-relative-dialog.component'
+import { AddRelativeDialogComponent } from './components/add-relative-dialog/add-relative-dialog.component';
+import { FaqComponent } from './pages/faq/faq.component'
 
 const MATERIAL_MODULES = [
   MatTabsModule,
@@ -61,7 +62,8 @@ const MATERIAL_MODULES = [
     ShortNumberPipe,
     LoginDialogComponent,
     RegisterDialogComponent,
-    AddRelativeDialogComponent
+    AddRelativeDialogComponent,
+    FaqComponent
   ],
   imports: [
     BrowserModule,

@@ -3,16 +3,16 @@ import { Article } from 'src/app/models/article';
 import { ApiService } from 'src/app/services/api/api.service';
 
 const COUNTERS = [{
-  title: "Death",
-  value: 10099
+  title: "Confirmed",
+  value: 139523
 },
 {
-  title : "Infected",
-  value: 222556
+  title : "Death",
+  value: 2433
 },
 {
   title : "Recovered",
-  value : 3126
+  value : 4865
 }]
 
 
@@ -32,8 +32,8 @@ export class NewsComponent implements OnInit {
     this.sentimentValue = localStorage.getItem("sentiment") ? +localStorage.getItem("sentiment") : 0;
     this.apiService.getNews(this.sentimentValue).subscribe(news => {
       news.forEach(article => {
-        const formattedDate = new Date(Date.parse(article.publishedAt));
-        article.publishedAt = formattedDate.toString()
+        const formattedDate = new Date(Date.parse(article.publishedAt)).toUTCString();
+        article.publishedAt = formattedDate;
       })
       this.articles = news;
     })
@@ -53,8 +53,8 @@ export class NewsComponent implements OnInit {
     localStorage.setItem("sentiment", event.value);
     this.apiService.getNews(this.sentimentValue).subscribe(news => {
       news.forEach(article => {
-        const formattedDate = new Date(Date.parse(article.publishedAt));
-        article.publishedAt = formattedDate.toString()
+        const formattedDate = new Date(Date.parse(article.publishedAt)).toUTCString();
+        article.publishedAt = formattedDate;
       })
       this.articles = news;
     })

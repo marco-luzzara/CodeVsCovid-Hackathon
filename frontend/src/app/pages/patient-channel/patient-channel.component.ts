@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Parent } from 'src/app/models/parent';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api/api.service';
+import { Message } from '../../models/message';
 
 const MESSAGES : string[] = [
   "tutto bene",
@@ -12,7 +13,7 @@ const MESSAGES : string[] = [
 
 const PARENT : Parent = {
   id : 123,
-  label : "Mario Rossi",
+  patientLabel : "Mario Rossi",
   /*
   name : "Mario",
   surname : "Rossi",
@@ -27,9 +28,9 @@ const PARENT : Parent = {
   styleUrls: ['./patient-channel.component.css']
 })
 export class PatientChannelComponent implements OnInit {
-  public messages : string[];
+  public messages : Message[];
   public newMessage : string;
-  public label : string;
+  public patientLabel : string;
   private dossierId : number;
 
   constructor(private route: ActivatedRoute, 
@@ -43,7 +44,9 @@ export class PatientChannelComponent implements OnInit {
       .subscribe((relatives : Parent[]) => {
         const found = relatives.find(r => r.id == dossierId);
         if(found){
-          this.label = found.label;
+          
+          this.patientLabel = found.patientLabel;
+          console.log(this.patientLabel);
         }
         else {
           this.router.navigateByUrl('/parentslist');
@@ -51,7 +54,12 @@ export class PatientChannelComponent implements OnInit {
       })
     
     this.apiService.getDossier(dossierId)
-      .subscribe(msgs => this.messages = msgs);
+      .subscribe((resp) => {
+        resp.messages.reverse();
+        const msgs : Message[] = resp.messages;
+        msgs.forEach(msg => msg.timestamp = new Date(Date.parse(msg.timestamp)).toUTCString())
+        this.messages = msgs
+      });
   }
   
   ngOnInit() {
@@ -60,10 +68,16 @@ export class PatientChannelComponent implements OnInit {
   sendMessage() {
     console.log(this.newMessage);
     this.apiService.sendMessage(this.dossierId, this.newMessage).subscribe(resp => {
-      if(resp.status == 201){
-        this.messages.push(this.newMessage);
+      if(resp.status == 200){
+        this.messages.push({
+          dossierId : "" + this.dossierId,
+          message : this.newMessage,
+          timestamp : new Date().toUTCString(),
+          userId : null
+        });
       }
+      this.newMessage = "";
     })
-    this.newMessage = "";
+  
   }
 }

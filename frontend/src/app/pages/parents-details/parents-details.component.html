@@ -1,5 +1,5 @@
-<h2 class="mat-title parent-detail-title">{{label}}</h2>
+<h2 class="mat-title parent-detail-title">{{patientLabel}}</h2>
 <!--<h3 class="mat-subheading-2 parent-detail-title">{{parent.fiscalCode}}</h3>-->
 <div *ngFor="let message of messages" class="message-box">
-    <p class="message-text">{{message}}</p>
+    <p class="message-text">{{message.message}}</p><br><i>{{message.timestamp}}</i>
 </div>

@@ -1,16 +1,16 @@
 <h1 mat-dialog-title>Insert the dossier credentials</h1>
-<div mat-dialog-content>
-    <mat-form-field>
+<div mat-dialog-content class="dialog-content">
+    <mat-form-field class="dialog-input">
         <mat-label>Dossier Id</mat-label>
         <input type="number" matInput [(ngModel)]="data.id">
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field class="dialog-input">
         <mat-label>Password</mat-label>
         <input type="text" matInput [(ngModel)]="data.password">
     </mat-form-field>
-    <mat-form-field>
-        <mat-label>Patient Name and Surname</mat-label>
-        <input type="text" matInput [(ngModel)]="data.label">
+    <mat-form-field class="dialog-input">
+        <mat-label>Patient Name</mat-label>
+        <input type="text" matInput [(ngModel)]="data.patientlabel">
     </mat-form-field>
 </div>
 <div mat-dialog-actions>

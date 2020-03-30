@@ -12,7 +12,7 @@ import { ApiService } from './services/api/api.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'CodeVSCovid';
+  title = 'Family SBAR';
 
   public isLoggedIn = false;
   public isNurse = true;
@@ -41,8 +41,8 @@ export class AppComponent {
       this.apiService.login(result.email,result.password)
         .subscribe(user => {
           console.log(user);
-          localStorage.setItem("token",JSON.stringify({id: user.id, isNurse : user.isNurse}));
-          window.location.reload();
+          localStorage.setItem("token",JSON.stringify({'id': user.id, 'isNurse' : user.isNurse}));
+          //window.location.reload();
         })
     });
   }
