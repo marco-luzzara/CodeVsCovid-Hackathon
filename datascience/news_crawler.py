@@ -88,7 +88,7 @@ class News():
 
 
         self.key = '456c14b545d94522a582967ba4a3269b'
-        self.category = ["business", " entertainment","general","health", "science", "sports", "technology"]
+        self.category = ["health", "science", "business"]
 
         self.params_dict = { "country=": None,
                             "category" : None,
@@ -97,11 +97,11 @@ class News():
         
         self.base_request = 'https://newsapi.org/v2/top-headlines?'
         
-        self.authenticator = IAMAuthenticator('D2ztJnangh_-XKoWSW37K-Mp8V3tOiGcRclPgTRNJxKN')
+        self.authenticator = IAMAuthenticator("1u6QD9RBFn-LEAlOpLJdjiIqOjmWFWO6zI6KzxvTiAk2")
         self.language_translator = LanguageTranslatorV3(
                 version='2018-05-01', authenticator=self.authenticator)
         
-        self.language_translator.set_service_url('https://api.eu-gb.language-translator.watson.cloud.ibm.com/instances/c7cc8f32-28cb-429d-8e35-39fa0faab1fb') 
+        self.language_translator.set_service_url("https://api.au-syd.language-translator.watson.cloud.ibm.com/instances/9f940bd7-6976-4b20-8a51-7473d495978d") 
         self.module_path = os.path.dirname(os.path.realpath(__file__))
         output_path = self.module_path.split("\\")[:-1]
         self.output_path = "\\".join(output_path)+ "\\data"
@@ -142,7 +142,7 @@ class News():
                     translation = self.language_translator.translate(text=info_dict["title"], model_id=q_str).get_result()
         
                     info_dict["translated_title"] = translation["translations"][0]["translation"]
-                    time.sleep(1)
+                    time.sleep(0.3)
                     ret.append(info_dict)       
                 except Exception as e :
                     print("API throttle error")
@@ -186,8 +186,7 @@ def add_sentiment(json_obj):
     scaled_val = scaler.fit_transform(np.array(score_list).reshape(-1,1))
     for dict_,el in zip(ret_dict , scaled_val):
         dict_["sentiment_scaled"] = float(el)
-        final_dict.append(dict_)
-        
+        final_dict.append(dict_)    
     return final_dict
 
 
@@ -224,17 +223,23 @@ if __name__ == "__main__":
             
         name_files = []
         for lan in list(NC.mapping.keys()):
-            try:
-                req = NC.write_query(country = lan)
-                res = requests.get(req).json()
-                res_enriched = NC.data_enrichment_v2(res,original_lang=lan)
-                NC.save_data(json_to_save  = res_enriched ,name_file = "news_" + lan)
-                time.sleep(5)
-                name_files.append("news_" + lan)
+            res_cat = []
+            for cat in NC.category:
+                try:
+                    req = NC.write_query(country = lan, category = cat)
+                    res = requests.get(req).json()
+                    res_cat.append(NC.data_enrichment_v2(res,original_lang=lan))
                 
-            except Exception as e :
-                raise(e)
-        
+                except Exception as e :
+                    print(e)
+                    raise(e)
+            
+            res_enriched = [elem for sublist in res_cat for elem in sublist]
+            NC.save_data(json_to_save  = res_enriched ,name_file = "news_" + lan)
+            time.sleep(5)
+            name_files.append("news_" + lan)
+            
+                
         state_name = [value[0] for value in NC.mapping.values() ]
         mapping_state_file={k:v for k,v in zip(state_name,name_files )}
         
@@ -245,7 +250,6 @@ if __name__ == "__main__":
         main(files=files, mapping=reversed_mapping_state_file)
         
         return 
-    
     
     schedule.every(375).minutes.do(do_all)
     
