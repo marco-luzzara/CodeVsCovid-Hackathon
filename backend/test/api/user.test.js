@@ -399,7 +399,7 @@ describe("Dossier association to a user", () => {
     });
 
     test("09 - Dossier already activated", () => {
-        mockManagerFunction(db.associateDossierToUser, DossierAlreadyActivatedError);
+        mockManagerFunction(db.associateDossierToUser, DossierAlreadyAssociatedToUserError);
 
         let options = {
             method: 'POST',

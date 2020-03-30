@@ -11,6 +11,7 @@ const WrongDossierPasswordError = require("../model/exceptions/logic/wrongDossie
 const DossierIdNotFoundError = require("../model/exceptions/logic/dossierIdNotFoundError.js");
 const DossierAlreadyActivatedError = require("../model/exceptions/logic/dossierAlreadyActivatedError.js");
 const UserMailNotFoundError = require("../model/exceptions/logic/userMailNotFoundError.js");
+const DossierAlreadyAssociatedToUserError = require("../model/exceptions/logic/dossierAlreadyAssociatedToUserError.js");
 
 function canBeParsedInt(n) {
     return Number(n) === parseInt(n);
@@ -82,14 +83,13 @@ router.post("/dossiers", async function(req, res){
         BodyValidator.validate(body, requiredFields);
 
         let result = await db.associateDossierToUser(body, parseInt(uid));
-        let status = (result != undefined) ? 200 : 404;
-        res.status(status).end();
+        res.status(200).end();
     } catch(exc){
         errorHandler(res, exc, {
             "400": [BodyValidatorError],
             "401": [WrongDossierPasswordError],
             "404": [DossierIdNotFoundError],
-            "409": [DossierAlreadyActivatedError],
+            "409": [DossierAlreadyAssociatedToUserError],
             "500": [null]
         })
     }
